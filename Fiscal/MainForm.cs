@@ -518,7 +518,7 @@ namespace FiscalApp
 
                         // clica na barra de rolagem.
                         //clickEditingControl(1672, 700);
-                        clickEditingControl(clickRolagem.locationX, clickRolagem.locationY);
+                        clickEditingControl(clickRolagem.locationX, clickRolagem.locationY, noWait: false, waitTime: 4000);
 
                         #endregion
                     }
@@ -637,7 +637,8 @@ namespace FiscalApp
 
                 foreach (FiscalDataSet.ObterConfigConjuntoRow campo in table.Rows)
                 {
-                    clickEditingControl((int)campo.locationX, (int)campo.locationY, campo.nome_campo, noWait: true);
+                    //clickEditingControl((int)campo.locationX, (int)campo.locationY, campo.nome_campo, noWait: true);
+                    clickEditingControl((int)campo.locationX, (int)campo.locationY, campo.nome_campo);
 
                     string _texto = repeatXTimes(qtdeRepeticao, campo.texto_campo);
                     Clipboard.SetText(_texto);
@@ -676,13 +677,9 @@ namespace FiscalApp
 
                 string char1 = frm.CodigoImpostoIVA.Text.ToCharArray()[0].ToString();
                 string char2 = frm.CodigoImpostoIVA.Text.ToCharArray()[1].ToString();
-
-                // posiciona o cursor um pouco ao lado esquerdo.
-                //clickEditingControl(614, 421);      // IVA
-                clickEditingControl(item1Pedido.locationX, item1Pedido.locationY);
-
+                
                 // dá um tab
-                sendText("{TAB}");
+                //sendText("{TAB}");
 
                 if (frm.MultiplePagesCheck.Checked)
                 {
@@ -702,7 +699,7 @@ namespace FiscalApp
                             int qtdePaginaAtual = 0;
 
                             // posiciona o cursor um pouco ao lado esquerdo.
-                            clickEditingControl(item1Pedido.locationX, item1Pedido.locationY);
+                            clickEditingControl(item1Pedido.locationX, item1Pedido.locationY/*, noWait: false, waitTime: 2000*/);
 
                             // dá um tab
                             sendText("{TAB}");
@@ -722,11 +719,8 @@ namespace FiscalApp
                             // se atingiu a qtde max de itens por página, dá um scroll
                             if (qtdePaginaAtual == MAX_ITENS_PER_PAGE)
                             {
-                                System.Threading.Thread.Sleep(1000);
-
-                                // clica na barra de rolagem.
-                                //clickEditingControl(833, 720);      // BARRA DE ROLAGEM ITENS DO PEDIDO
-                                clickEditingControl(clickRolagem.locationX, clickRolagem.locationY);
+                                // BARRA DE ROLAGEM ITENS DO PEDIDO
+                                clickEditingControl(clickRolagem.locationX, clickRolagem.locationY, noWait: false, waitTime: 3000);
                             }
                         }
 
@@ -734,21 +728,17 @@ namespace FiscalApp
                 }
                 else
                 {
+                    // posiciona o cursor um pouco ao lado esquerdo.
+                    clickEditingControl(item1Pedido.locationX, item1Pedido.locationY);
+
                     for (int i = 0; i < Convert.ToInt32(frm.QtdeRepeat.Text); i++)
                     {
-
                         // Envia caractere por caractere
                         sendText("{" + char1 + "}");
                         sendText("{" + char2 + "}");
                         sendText("{DOWN}");
-
                     }
                 }
-
-
-                //sendText("{" + char1 + "}");
-                //sendText("{" + char2 + "}");
-                //sendText("{DOWN}");
             }
         }
 
@@ -1181,8 +1171,8 @@ namespace FiscalApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao efetuar o cálculo. (" + ex.Message + ")\n\n" + 
-                    "Valor Montante: " + valorMontanteClip + "\n" + 
+                MessageBox.Show("Erro ao efetuar o cálculo. (" + ex.Message + ")\n\n" +
+                    "Valor Montante: " + valorMontanteClip + "\n" +
                     "Valor Líquido: " + valorLiquido,
                     Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;

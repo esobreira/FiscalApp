@@ -132,9 +132,6 @@ namespace FiscalApp
 
         private void controleNFEDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            string t = "";
-            //MessageBox.Show(e.Exception.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             try
             {
 
