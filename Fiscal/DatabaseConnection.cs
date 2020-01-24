@@ -17,7 +17,7 @@ namespace FiscalApp
                 
                 //C:\Users\sobebe01\source\repos\FiscalApp\Fiscal\bin\newDebug\App_Data
                 sb.Append(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=");
-                sb.Append(@"C:\Users\sobebe01\source\repos\FiscalApp\Fiscal\bin\newDebug\App_Data\Database.mdf");
+                sb.Append(@"C:\Users\sobebe01\source\repos\FiscalApp\Fiscal\bin\Debug\App_Data\Database.mdf");
                 sb.Append(";Integrated Security=True");
 
                 //global::FiscalApp.Properties.Settings.Default.dbProgram = sb.ToString();

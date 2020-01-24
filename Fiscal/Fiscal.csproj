@@ -41,7 +41,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\newDebug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -122,10 +122,16 @@
     <Compile Include="Forms\Repetir_CodImposto_Form.Designer.cs">
       <DependentUpon>Repetir_CodImposto_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPosicionarCoordenadas.cs">
+    <Compile Include="Forms\frmDadosTelefonia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPosicionarCoordenadas.Designer.cs">
+    <Compile Include="Forms\frmDadosTelefonia.Designer.cs">
+      <DependentUpon>frmDadosTelefonia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmPosicionarCoordenadas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmPosicionarCoordenadas.Designer.cs">
       <DependentUpon>frmPosicionarCoordenadas.cs</DependentUpon>
     </Compile>
     <Compile Include="myDataSet.cs">
@@ -154,7 +160,10 @@
     <EmbeddedResource Include="Forms\Repetir_CodImposto_Form.resx">
       <DependentUpon>Repetir_CodImposto_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPosicionarCoordenadas.resx">
+    <EmbeddedResource Include="Forms\frmDadosTelefonia.resx">
+      <DependentUpon>frmDadosTelefonia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmPosicionarCoordenadas.resx">
       <DependentUpon>frmPosicionarCoordenadas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -212,11 +221,11 @@
     <None Include="Icons\one.ico" />
     <None Include="Icons\money.ico" />
     <Content Include="App_Data\Database.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

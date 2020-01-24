@@ -12,7 +12,10 @@ namespace FiscalApp
     {
         IntPtr whnd;
         SortedDictionary<string, string> hotwords = new SortedDictionary<string, string>();
-        const int SAP_Y_COORD_OFFSET = 120;
+
+        public const int SAP_Y_COORD_OFFSET = 120;
+        public const int ARROW_CURSOR = 2;
+
         const int MAX_ITENS_PER_PAGE = 18;
         const int WAIT_TIME_QUERY_NF = 7500;
 
@@ -31,6 +34,21 @@ namespace FiscalApp
         {
             InitializeComponent();
 
+        }
+
+        private static void moveToDummyPlace()
+        {
+            AutoItX.MouseMove(430, MainForm.SAP_Y_COORD_OFFSET - 42);
+        }
+
+        public static void AguardarResposta()
+        {
+            moveToDummyPlace();
+
+            do
+            {
+                System.Threading.Thread.Sleep(1000);
+            } while (AutoItX.MouseGetCursor() != MainForm.ARROW_CURSOR);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -311,7 +329,7 @@ namespace FiscalApp
         /// <param name="toolTip">ToolTip</param>
         /// <param name="noWait">Não aguardar</param>
         /// <param name="waitTime">Tempo de espera em milisegundos antes do click</param>
-        public static void clickEditingControl(int x, int y, string toolTip = "", bool noWait = true, int waitTime = 1000, int mouseSpeed = 5, MouseButton button = MouseButton.LEFT)
+        public static void clickEditingControl(int x, int y, string toolTip = "", bool noWait = true, int waitTime = 1000, int mouseSpeed = 5, MouseButton button = MouseButton.LEFT, int numClicks = 1)
         {
             // points mouse
             AutoItX.MouseMove(x, y + SAP_Y_COORD_OFFSET, mouseSpeed);
@@ -325,7 +343,7 @@ namespace FiscalApp
             }
 
             //AutoItX.MouseClick(_button, numClicks: 1, speed: 5);
-            AutoItX.MouseClick(_button, numClicks: 1);
+            AutoItX.MouseClick(_button, numClicks: numClicks);
 
             // sets tootip for visual localization
             //if (!string.IsNullOrEmpty(toolTip))
@@ -344,6 +362,34 @@ namespace FiscalApp
             }
         }
 
+        public static void clickEditingControl(CamposRow campo, string toolTip = "", int numClicks = 1)
+        {
+            int mouseSpeed = 10;
+            int waitTime = 500;
+
+            clickEditingControl(campo.locationX, campo.locationY, toolTip: "", noWait: false, waitTime: waitTime, mouseSpeed: mouseSpeed, numClicks: numClicks);
+        }
+
+        public static string copyEntireTextFromControl()
+        {
+            AutoItX.Send("{HOME}");
+            AutoItX.Send("{SHIFTDOWN}");
+            AutoItX.Send("+{END}");
+            AutoItX.Send("{SHIFTUP}");
+            AutoItX.Send("^c");
+            return Clipboard.GetText();
+        }
+
+        public static void copyEntireTextToClipboard()
+        {
+            AutoItX.Send("{HOME}");
+            AutoItX.Send("{SHIFTDOWN}");
+            AutoItX.Send("+{END}");
+            AutoItX.Send("{SHIFTUP}");
+            AutoItX.Send("^c");
+            Clipboard.GetText();
+        }
+
         private string selectAndGetTextFromCursor()
         {
             AutoItX.Send("+{END}");
@@ -351,7 +397,7 @@ namespace FiscalApp
             return Clipboard.GetText();
         }
 
-        private void selectTextFromApplication()
+        public static void selecEntireTextFromControl()
         {
             AutoItX.Send("{HOME}");
             AutoItX.Send("{SHIFTDOWN}");
@@ -364,14 +410,18 @@ namespace FiscalApp
             AutoItX.Send("{DELETE}");
         }
 
+        public static void selectTextAndClear()
+        {
+            AutoItX.Send("{HOME}");
+            AutoItX.Send("{SHIFTDOWN}");
+            AutoItX.Send("+{END}");
+            AutoItX.Send("{SHIFTUP}");
+            AutoItX.Send("{DELETE}");
+        }
+
         private void sendTextFromClipboard()
         {
             AutoItX.Send(Clipboard.GetText());
-        }
-
-        private void sendText(string text)
-        {
-            AutoItX.Send(text);
         }
 
         private void sempreNoTopoToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -414,9 +464,14 @@ namespace FiscalApp
             MessageBox.Show(log.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
+        private void sendText(string text)
+        {
+            AutoItX.Send(text);
+        }
+
         private void sendCONTROLVandRELEASE()
         {
-            selectTextFromApplication();
+            selecEntireTextFromControl();
             clearTextSelected();
             sendText("{CTRLDOWN}");
             sendText("v");
@@ -643,7 +698,7 @@ namespace FiscalApp
                     string _texto = repeatXTimes(qtdeRepeticao, campo.texto_campo);
                     Clipboard.SetText(_texto);
 
-                    selectTextFromApplication();
+                    selecEntireTextFromControl();
                     clearTextSelected();
 
                     sendText("{CTRLDOWN}");
@@ -665,6 +720,7 @@ namespace FiscalApp
         {
             Repetir_CodImposto_Form frm = new Repetir_CodImposto_Form();
 
+            // Posiciona na coluna Item, do Item 1 do Pedido.
             const int POSICIONAR_ITEM_UM_PEDIDO = 12;
             const int CLICK_ROLAGEM_TELA_ITENS_PEDIDO = 13;
 
@@ -677,8 +733,8 @@ namespace FiscalApp
 
                 string char1 = frm.CodigoImpostoIVA.Text.ToCharArray()[0].ToString();
                 string char2 = frm.CodigoImpostoIVA.Text.ToCharArray()[1].ToString();
-                
-                // dá um tab
+
+                // dá um tab 
                 //sendText("{TAB}");
 
                 if (frm.MultiplePagesCheck.Checked)
@@ -730,6 +786,9 @@ namespace FiscalApp
                 {
                     // posiciona o cursor um pouco ao lado esquerdo.
                     clickEditingControl(item1Pedido.locationX, item1Pedido.locationY);
+
+                    // dá um tab
+                    sendText("{TAB}");
 
                     for (int i = 0; i < Convert.ToInt32(frm.QtdeRepeat.Text); i++)
                     {
@@ -974,27 +1033,27 @@ namespace FiscalApp
                     sendText("s");
                     sendText("{CTRLUP}");
 
-                    System.Threading.Thread.Sleep(2500);
+                    System.Threading.Thread.Sleep(1500);
+                    // 2500
 
                     sendText("{F8}");
 
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);    // aguarda retorno da consulta da nf
+                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 1800);    // aguarda retorno da consulta da nf
+                    //2500
 
                     // CLICK BOTÃO DIREITO NF
                     //clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
                     clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
 
-                    //sendText("O");
                     sendText("{DOWN}");
                     System.Threading.Thread.Sleep(1000);
                     sendText("{ENTER}");
 
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 3500);      // Aguarda concluir a Confirmação da Operação. == 10s
+                    //3500
+                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);      // Aguarda concluir a Confirmação da Operação. == 10s
 
-                    //clickEditingControl(clickOperConfirmada.locationX, clickOperConfirmada.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF);      // CLICK EM OPERAÇÃO CONFIRMADA
-
-                    //clickEditingControl(280, 293, mouseSpeed: 30);      // Clica no grid na primeira linha de retorno do EDX
-                    clickEditingControl(clickLinhaOpConf.locationX, clickLinhaOpConf.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000);      // Clica no grid na primeira linha de retorno do EDX
+                    //4000
+                    clickEditingControl(clickLinhaOpConf.locationX, clickLinhaOpConf.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 2500);      // Clica no grid na primeira linha de retorno do EDX, tem que aguardar um pouco.
 
                     sendCONTROLCandRELEASE();
 
@@ -1002,10 +1061,11 @@ namespace FiscalApp
 
                     sendText("{ESC}");
 
-                    //if (resultado.ToString().ToLower().IndexOf("evento registrado e vinculado") > 0)
+                    // Se confirmado, consultará a nf novamente. 
+                    //if (resultado.ToString().ToLower().IndexOf("registrado e vinculado") > 0)
                     //{
-                    //clickEditingControl(opConfirmadaFechaTelaRetorno.locationX, opConfirmadaFechaTelaRetorno.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF);      // Fecha a tela de consulta
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);  // Se confirmado, consultará a nf novamente. 
+                    // aguarda refresh do grid quando confirmado com sucesso, valor pode variar.
+                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);
                     //}
 
                     resultado.AppendLine(chave + ";" + resultadoConsulta);
@@ -1028,81 +1088,7 @@ namespace FiscalApp
 
         private void efetuarDownloadDeXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtChavesDeAcesso.Text))
-            {
-                MessageBox.Show("Informe as chaves de acesso.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
 
-            const int EGR_CLK_BTN_DIREITO_NF = 14;
-
-            CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
-
-            string[] sep = new string[] { Environment.NewLine };
-            string[] chaves = txtChavesDeAcesso.Text.Split(separator: sep, options: StringSplitOptions.None);
-            //string resultadoConsulta = "";
-            StringBuilder resultado = new StringBuilder();
-
-            bringSAPUI_ToFront();
-
-            int count = 1;
-
-            foreach (string chave in chaves)
-            {
-                if (chave.Length > 0)
-                {
-                    // clica em local em branco pra não atrapalhar o SHIFT+F4.
-                    clickEditingControl(402, 44);
-
-                    sendText("{SHIFTDOWN}");
-                    sendText("{F4}");
-                    sendText("{SHIFTUP}");
-
-                    System.Threading.Thread.Sleep(3500);
-
-                    Clipboard.SetText(chave);
-
-                    sendCONTROLVandRELEASE();
-
-                    sendText("{CTRLDOWN}");
-                    sendText("s");
-                    sendText("{CTRLUP}");
-
-                    System.Threading.Thread.Sleep(2500);
-
-                    sendText("{F8}");
-
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF);    // aguarda retorno da consulta da nf
-
-                    clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
-
-                    //clickEditingControl(338, 298, waitTime: 7000, mouseSpeed: 30);      // SendKeys 'D' - Download de XML.
-                    sendText("d");
-                    System.Threading.Thread.Sleep(1500);
-
-                    // aguarda terminar o download
-                    // PROCESSO É DEMORADO.
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);
-
-                    // Clica 1st linha de retorno da consulta protocolo 
-                    clickEditingControl(415, 295 /*, noWait: false, waitTime: 2500*/);
-
-                    sendCONTROLCandRELEASE();
-
-                    //resultadoConsulta = Clipboard.GetText();
-                    //resultado.AppendLine(chave + ";" + resultadoConsulta);
-                    resultado.AppendLine(chave + ";" + Clipboard.GetText());
-
-                    // Fecha a tela de retorno.
-                    clickEditingControl(1153, 220, noWait: false, waitTime: WAIT_TIME_QUERY_NF);
-
-                    count++;
-                }
-            }
-
-            txtResultadoConsulta.Text = resultado.ToString();
-
-            MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void calcularVlrUnitarioDePedido100ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1127,7 +1113,7 @@ namespace FiscalApp
             clickEditingControl(posicionaVlrMontante.locationX, posicionaVlrMontante.locationY, "", false);
 
             // Seleciona texto.
-            selectTextFromApplication();
+            selecEntireTextFromControl();
 
             // Copia valor montante.
             sendCONTROLCandRELEASE();
@@ -1138,7 +1124,7 @@ namespace FiscalApp
             clickEditingControl(posicionaValorItem1Pedido.locationX, posicionaValorItem1Pedido.locationY, "", false);
 
             // Seleciona texto.
-            selectTextFromApplication();
+            selecEntireTextFromControl();
 
             // Apaga.
             clearTextSelected();
@@ -1153,7 +1139,7 @@ namespace FiscalApp
             clickEditingControl(clicaCampoVlrLiquido.locationX, clicaCampoVlrLiquido.locationY, "", false);
 
             // Seleciona texto.
-            selectTextFromApplication();
+            selecEntireTextFromControl();
 
             // Copia valor líquido.
             sendCONTROLCandRELEASE();
@@ -1185,7 +1171,7 @@ namespace FiscalApp
             clickEditingControl(clicaQtdeItem1.locationX, clicaQtdeItem1.locationY, "", false);
 
             // Seleciona texto.
-            selectTextFromApplication();
+            selecEntireTextFromControl();
 
             // Apaga.
             clearTextSelected();
@@ -1206,6 +1192,46 @@ namespace FiscalApp
             var frm = new frmPosicionarCoordenadas();
 
             frm.Show();
+        }
+
+        private void downloadXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int iteracoes = 10;
+
+            DialogResult ret = MessageBox.Show("Esta operação vai executar " + iteracoes + " iterações de download de XML no EGR.\n" +
+                "Faça a pesquisa e deixe o grid de notas preenchido com " + iteracoes + " notas fiscais.\n\nContinuar?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (ret == DialogResult.No)
+            {
+                return;
+            }
+
+            const int EGR_CLK_BTN_DIREITO_NF = 14;
+
+            CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
+
+            bringSAPUI_ToFront();
+
+            for (int i = 1; i <= iteracoes; i++)
+            {
+                clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
+
+                //clickEditingControl(338, 298, waitTime: 7000, mouseSpeed: 30);      // SendKeys 'D' - Download de XML.
+                sendText("d");
+
+                // aguarda terminar o download
+                // PROCESSO É DEMORADO.
+                System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 3500);
+            }
+
+            MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void entrarDadosTelefoniaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmDadosTelefonia(fiscalDataSet);
+            //frm.Show(this);
+            frm.ShowDialog(this);
         }
     }
 }
