@@ -1,9 +1,11 @@
 ﻿using AutoIt;
+using FiscalApp.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static FiscalApp.Acao;
 using static FiscalApp.FiscalDataSet;
 
 namespace FiscalApp
@@ -12,6 +14,9 @@ namespace FiscalApp
     {
         IntPtr whnd;
         SortedDictionary<string, string> hotwords = new SortedDictionary<string, string>();
+
+        public static bool STOP_CURRENT_PROCESS = false;
+        public static int WAIT_TIME = 1000;
 
         public const int SAP_Y_COORD_OFFSET = 120;
         public const int ARROW_CURSOR = 2;
@@ -36,18 +41,55 @@ namespace FiscalApp
 
         }
 
-        private static void moveToDummyPlace()
+        public static Point dummyPlace()
         {
-            AutoItX.MouseMove(430, MainForm.SAP_Y_COORD_OFFSET - 42);
+            var p = new Point(430, MainForm.SAP_Y_COORD_OFFSET - 42);
+            return p;
         }
 
-        public static void AguardarResposta()
+        private static void moveToDummyPlace()
         {
-            moveToDummyPlace();
+            //AutoItX.MouseMove(430, MainForm.SAP_Y_COORD_OFFSET - 42);
+
+            // BARRA DE TÍTULO DO SAP
+            var dummy = dummyPlace();
+
+            AutoItX.MouseMove(dummy.X, dummy.Y);
+        }
+
+        /// <summary>
+        /// Aguarda 1s e repete até que o Cursor esteja com o símbolo de Ponteiro.
+        /// </summary>
+        /// <param name="dummyMove">Se true, move o cursor para um local que certamente ficará com símbolo de ponteiro (aguardando).</param>
+        public static void AguardarResposta(bool dummyMove = true)
+        {
+            if (dummyMove)
+            {
+                moveToDummyPlace();
+            }
 
             do
             {
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(WAIT_TIME);
+
+                // Verifica se o usuário mexeu o mouse.
+                var pos = AutoItX.MouseGetPos();
+
+                if (pos.X != dummyPlace().X)
+                {
+                    if (MessageBox.Show("Detectado mudança de posição do mouse. Deseja parar o processo?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button2, MessageBoxOptions.ServiceNotification) == DialogResult.Yes)
+                    {
+                        STOP_CURRENT_PROCESS = true;
+                        return;
+                    }
+                }
+
+                //if (STOP_CURRENT_PROCESS)
+                //{
+                //    return;
+                //}
+
             } while (AutoItX.MouseGetCursor() != MainForm.ARROW_CURSOR);
         }
 
@@ -345,12 +387,6 @@ namespace FiscalApp
             //AutoItX.MouseClick(_button, numClicks: 1, speed: 5);
             AutoItX.MouseClick(_button, numClicks: numClicks);
 
-            // sets tootip for visual localization
-            //if (!string.IsNullOrEmpty(toolTip))
-            //{
-            //    AutoItX.ToolTip(toolTip);
-            //}
-
             if (noWait)
             {
                 // sem esperar
@@ -371,6 +407,16 @@ namespace FiscalApp
         }
 
         public static string copyEntireTextFromControl()
+        {
+            AutoItX.Send("{HOME}");
+            AutoItX.Send("{SHIFTDOWN}");
+            AutoItX.Send("+{END}");
+            AutoItX.Send("{SHIFTUP}");
+            AutoItX.Send("^c");
+            return Clipboard.GetText();
+        }
+
+        public static string returnEntireTextSelected()
         {
             AutoItX.Send("{HOME}");
             AutoItX.Send("{SHIFTDOWN}");
@@ -811,6 +857,9 @@ namespace FiscalApp
             // pass ClassnameNN
             IntPtr window = AutoItX.ControlGetHandle(sap, "Afx:5DD90000:10081");
             Rectangle szClient = AutoItX.WinGetClientSize(window);
+
+            // Reinicia o flag de processo.
+            STOP_CURRENT_PROCESS = false;
         }
 
         private void tsbRepeatCFOPServico_Click(object sender, EventArgs e)
@@ -1196,15 +1245,20 @@ namespace FiscalApp
 
         private void downloadXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int iteracoes = 10;
+            frmIteracoes frm = new frmIteracoes();
 
-            DialogResult ret = MessageBox.Show("Esta operação vai executar " + iteracoes + " iterações de download de XML no EGR.\n" +
-                "Faça a pesquisa e deixe o grid de notas preenchido com " + iteracoes + " notas fiscais.\n\nContinuar?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (ret == DialogResult.No)
+            if (frm.ShowDialog(this) == DialogResult.Cancel)
             {
                 return;
             }
+
+            //DialogResult ret = MessageBox.Show("Esta operação vai executar " + iteracoes + " iterações de download de XML no EGR.\n" +
+            //    "Faça a pesquisa e deixe o grid de notas preenchido com " + iteracoes + " notas fiscais.\n\nContinuar?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            //if (ret == DialogResult.No)
+            //{
+            //    return;
+            //}
 
             const int EGR_CLK_BTN_DIREITO_NF = 14;
 
@@ -1212,19 +1266,22 @@ namespace FiscalApp
 
             bringSAPUI_ToFront();
 
-            for (int i = 1; i <= iteracoes; i++)
+            for (int i = 1; i <= frm.QtdeIteracoes.Value; i++)
             {
-                clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
+                // Tem que aguardar uns segundos para o Menu de Contexto aparecer.
+                clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: 1000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
 
-                //clickEditingControl(338, 298, waitTime: 7000, mouseSpeed: 30);      // SendKeys 'D' - Download de XML.
                 sendText("d");
 
-                // aguarda terminar o download
-                // PROCESSO É DEMORADO.
-                System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 3500);
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
             }
 
-            MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
         }
 
         private void entrarDadosTelefoniaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1233,5 +1290,294 @@ namespace FiscalApp
             //frm.Show(this);
             frm.ShowDialog(this);
         }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (e.KeyCode == Keys.Escape)
+            //{
+            //    if (MessageBox.Show("Deseja parar o processo?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, 
+            //        MessageBoxDefaultButton.Button2, MessageBoxOptions.ServiceNotification) == DialogResult.Yes)
+            //    {
+            //        STOP_CURRENT_PROCESS = true;
+            //    }
+            //}
+        }
+
+        private void entrarEGREPrepararConsultaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Actions acoes = new Actions();
+
+            acoes.Adicionar(new List<AcaoBaseClass>()
+            {
+                new Acao(86, 134, "btn"),
+                new Acao(114, 134, "monitor"),
+
+                new Acao() {
+                     Local = new Point(114,-12),
+                     Nome = "seleção dinâmica",
+                     TempoEsperaAntesAcao = 1000,
+                },
+
+                //new Acao("{SHIFTDOWN}{F4}"),
+                //new Acao("{SHIFTUP}"),
+                new Acao(25, 69, "exp header"),
+                new Acao(127, 88, "seleciona param chv acesso"),
+                new Acao(155, 417, "transfere marcado"),
+                new Acao(781, 123, "matchcode de chaves de acesso"),      
+                //new Acao("SHIFT+F12"),
+                new Acao(352, 372, "upload clipboard"),
+                new Acao(42,371, "executar F8 na  de chv de acesso"),
+                //new Acao("F8"),
+                new Acao(53,413, "Control S"),
+                new Acao(84,-11, "F8 na  principal"),
+            });
+
+            bringSAPUI_ToFront();
+
+            // Diminui o tempo de espera.
+            WAIT_TIME = 500;
+
+            foreach (AcaoBaseClass a in acoes.Lista)
+            {
+                if (a.IsTecla)
+                {
+                    a.EnviarTecla();
+                }
+                else
+                {
+                    a.Clicar();
+                }
+
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
+            }
+        }
+
+        private void pesquisarChavesDeAcessoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Actions acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                new Acao() {
+                     Local = new Point(114,-12),
+                     Nome = "seleção dinâmica",
+                     TempoEsperaAntesAcao = 1000,
+                },
+                new Acao(781, 123, "entra no matchcode de chaves de acesso"),
+                new Acao(164,371, "limpa os itens existentes"),
+                new Acao(352, 372, "upload clipboard"),
+                new Acao(42,371, "executar F8 na  de chv de acesso"),
+                new Acao(53,413, "Control S"),
+                new Acao(84,-11, "F8 na  principal"),
+            });
+
+            bringSAPUI_ToFront();
+
+            // Diminui o tempo de espera.
+            WAIT_TIME = 500;
+
+            foreach (var a in acoes.Lista)
+            {
+                if (a.IsTecla)
+                {
+                    a.EnviarTecla();
+                }
+                else
+                {
+                    a.Clicar();
+                }
+
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
+            }
+        }
+
+        private void tsbtnPesqChvAcessoEGR_Click(object sender, EventArgs e)
+        {
+            pesquisarChavesDeAcessoToolStripMenuItem.PerformClick();
+        }
+
+        private void CopiarChvOrigemeRefToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Actions acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                new Acao(531,68, "clica em chave de acesso"),
+                new Acao() { Tag = "copiarconteúdo" },
+
+                new Acao(517, 115, "clica em chave de acesso referencia"),
+                new Acao() { Tag = "copiarconteúdo" },
+
+                new Tecla()
+                {
+                    Key = "{F3}",
+                    TempoEsperaAposAcao = 1000,
+                },
+
+                new Tecla()
+                {
+                    Key = "{F3}",
+                    TempoEsperaAposAcao = 1000,
+                },
+
+                new Acao()
+                {
+                    Local = new Point(114, -12),
+                    Nome = "seleção dinâmica",
+                    TempoEsperaAntesAcao = 1000,
+                },
+
+                new Acao(781, 123, "entra no matchcode de chaves de acesso"),
+                new Acao(164, 371, "limpa os itens existentes"),
+
+                new Acao() { Tag = "savetoclipboard" },
+
+                new Acao(352, 372, "upload clipboard"),
+                new Acao(42, 371, "executar F8 na  de chv de acesso"),
+                new Acao(53, 413, "Control S"),
+                new Acao(84, -11, "F8 na  principal"),
+            });
+
+            bringSAPUI_ToFront();
+
+            // Diminui o tempo de espera.
+            WAIT_TIME = 500;
+
+            StringBuilder chaves = new StringBuilder();
+
+            foreach (var a in acoes.Lista)
+            {
+                switch (a.Tag)
+                {
+                    case "copiarconteúdo":
+                        chaves.AppendLine(returnEntireTextSelected());
+                        break;
+
+                    case "savetoclipboard":
+                        Clipboard.SetText(chaves.ToString());
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (a.IsTecla)
+                {
+                    a.EnviarTecla();
+                }
+                else
+                {
+                    a.Clicar();
+                }
+
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
+            }
+        }
+
+        private void copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NotaFiscal nforigem = new NotaFiscal();
+            NotaFiscal nfref = new NotaFiscal();
+
+            Actions acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                // Estando dentro da NF de Referência, a NF de Entrada.
+                // Supõe-se que parte da Nota Fiscal de Entrada.
+
+                new Acao(531,68, "clica em chave de acesso da NF de Entrada"),
+                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
+                new Acao(610,133, "clica Tp Operacao da NF de Entrada"),
+                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
+                new Acao(914,112, "clica Data Emissão da NF de Entrada"),
+                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
+                new Acao(1146,70, "clica no Emissor da NF de Entrada"),
+                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
+                new Acao(921,72, "clica no Número da NF de Entrada"),
+
+                new Acao(517, 115, "clica em chave de acesso referencia"),
+                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
+
+                new Tecla()
+                {
+                    Key = "{F3}",
+                    TempoEsperaAposAcao = 1000,
+                },
+
+                new Tecla()
+                {
+                    Key = "{F3}",
+                    TempoEsperaAposAcao = 1000,
+                },
+
+                new Acao()
+                {
+                    Local = new Point(114, -12),
+                    Nome = "seleção dinâmica",
+                    TempoEsperaAntesAcao = 1000,
+                },
+
+                new Acao(781, 123, "entra no matchcode de chaves de acesso"),
+                new Acao(164, 371, "limpa os itens existentes"),
+
+                new Acao() { Tag = "savetoclipboard" },
+
+                new Acao(352, 372, "upload clipboard"),
+                new Acao(42, 371, "executar F8 na  de chv de acesso"),
+                new Acao(53, 413, "Control S"),
+                new Acao(84, -11, "F8 na  principal"),
+            });
+
+            bringSAPUI_ToFront();
+
+            // Diminui o tempo de espera.
+            WAIT_TIME = 500;
+
+            StringBuilder chaves = new StringBuilder();
+
+            foreach (var a in acoes.Lista)
+            {
+                switch (a.Tag)
+                {
+                    case "copiarconteúdo":
+                        chaves.AppendLine(returnEntireTextSelected());
+                        break;
+
+                    case "savetoclipboard":
+                        Clipboard.SetText(chaves.ToString());
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (a.IsTecla)
+                {
+                    a.EnviarTecla();
+                }
+                else
+                {
+                    a.Clicar();
+                }
+
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
+            }
+        }
+
     }
 }

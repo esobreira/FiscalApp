@@ -92,9 +92,9 @@ namespace FiscalApp
             MainForm.clickEditingControl(NR_PEDIDO);
             send(Pedido.Text);
             send("{ENTER}");
-            //System.Threading.Thread.Sleep(2000);   // Aguarda retorno do pedido
 
             MainForm.AguardarResposta();
+            if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             MainForm.clickEditingControl(VERIFICA_SALDO);
             decimal saldo = decimal.Parse(MainForm.copyEntireTextFromControl());
@@ -108,7 +108,9 @@ namespace FiscalApp
             MainForm.clickEditingControl(CLK_DETALHES);
             System.Threading.Thread.Sleep(1000);
             send("{ENTER}");        // Para confirmar msg de data de vencimento.
-            System.Threading.Thread.Sleep(1000);
+
+            MainForm.AguardarResposta();
+            if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             MainForm.clickEditingControl(CTG_NF);
             send("T1");
@@ -117,11 +119,13 @@ namespace FiscalApp
 
             // Aguarda trazer o botão Nota Fiscal após digitar Categoria NF.
             MainForm.AguardarResposta();
+            if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             MainForm.clickEditingControl(CLK_NF);
 
             // Aguarda até carregar a tela de nota fiscal.
             MainForm.AguardarResposta();
+            if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             MainForm.clickEditingControl(COL_CFOP_GRID);
             MainForm.selectTextAndClear();
@@ -129,6 +133,8 @@ namespace FiscalApp
             send("{ENTER}");
 
             MainForm.AguardarResposta();
+            if (MainForm.STOP_CURRENT_PROCESS) { return; }
+
             MainForm.clickEditingControl(CLICA_DETALHE_ITEM);
 
             MainForm.clickEditingControl(CLICK_IMPOSTOS);

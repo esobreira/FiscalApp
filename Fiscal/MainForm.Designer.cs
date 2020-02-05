@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.tabPageConjunto = new System.Windows.Forms.TabPage();
@@ -89,11 +89,17 @@
             this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copiarÚltimaPalavraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.repetirCFOPEServiçoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repetirCódigoImpostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.entrarDadosTelefoniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hotWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eGRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entrarEGREPrepararConsultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pesquisarChavesDeAcessoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopiarChvOrigemeRefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.controleDeNFeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
@@ -105,11 +111,17 @@
             this.sobreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.localDaInstalaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsbGravar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbRunSet = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tsbQtdeRepeticoes = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbRepeatCFOPServico = new System.Windows.Forms.ToolStripButton();
+            this.tsbRepetirCodImposto = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbtnPesqChvAcessoEGR = new System.Windows.Forms.ToolStripButton();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.taConjunto = new FiscalApp.FiscalDataSetTableAdapters.ConjuntoTableAdapter();
@@ -120,14 +132,8 @@
             this.bsObterConfigConjunto = new System.Windows.Forms.BindingSource(this.components);
             this.taObterConfigConjunto = new FiscalApp.FiscalDataSetTableAdapters.ObterConfigConjuntoTableAdapter();
             this.chavesDeAcessoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tsbGravar = new System.Windows.Forms.ToolStripButton();
-            this.tsbRunSet = new System.Windows.Forms.ToolStripButton();
-            this.tsbRepeatCFOPServico = new System.Windows.Forms.ToolStripButton();
-            this.tsbRepetirCodImposto = new System.Windows.Forms.ToolStripButton();
-            this.repetirCFOPEServiçoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.repetirCódigoImpostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
-            this.entrarDadosTelefoniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             this.mainTabControl.SuspendLayout();
             this.tabPageConjunto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConjunto)).BeginInit();
@@ -333,8 +339,8 @@
             // qtdeRepeticoesDataGridViewTextBoxColumn
             // 
             this.qtdeRepeticoesDataGridViewTextBoxColumn.DataPropertyName = "QtdeRepeticoes";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.NullValue = "0";
+            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.qtdeRepeticoesDataGridViewTextBoxColumn.HeaderText = "Qtde. Repetições";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.Name = "qtdeRepeticoesDataGridViewTextBoxColumn";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.ReadOnly = true;
@@ -392,7 +398,7 @@
             this.idConjuntoDataGridViewTextBoxColumn1.HeaderText = "Cód. Conjunto";
             this.idConjuntoDataGridViewTextBoxColumn1.Name = "idConjuntoDataGridViewTextBoxColumn1";
             this.idConjuntoDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.idConjuntoDataGridViewTextBoxColumn1.Width = 99;
+            this.idConjuntoDataGridViewTextBoxColumn1.Width = 91;
             // 
             // nomeconjuntoDataGridViewTextBoxColumn
             // 
@@ -673,6 +679,24 @@
             this.toolStripSeparator6.Size = new System.Drawing.Size(309, 6);
             this.toolStripSeparator6.Visible = false;
             // 
+            // repetirCFOPEServiçoToolStripMenuItem
+            // 
+            this.repetirCFOPEServiçoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("repetirCFOPEServiçoToolStripMenuItem.Image")));
+            this.repetirCFOPEServiçoToolStripMenuItem.Name = "repetirCFOPEServiçoToolStripMenuItem";
+            this.repetirCFOPEServiçoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F2)));
+            this.repetirCFOPEServiçoToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.repetirCFOPEServiçoToolStripMenuItem.Text = "Repetir CFOP e Serviço";
+            this.repetirCFOPEServiçoToolStripMenuItem.Click += new System.EventHandler(this.repetirCFOPEServiçoToolStripMenuItem_Click);
+            // 
+            // repetirCódigoImpostoToolStripMenuItem
+            // 
+            this.repetirCódigoImpostoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("repetirCódigoImpostoToolStripMenuItem.Image")));
+            this.repetirCódigoImpostoToolStripMenuItem.Name = "repetirCódigoImpostoToolStripMenuItem";
+            this.repetirCódigoImpostoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
+            this.repetirCódigoImpostoToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.repetirCódigoImpostoToolStripMenuItem.Text = "Repetir Código Imposto";
+            this.repetirCódigoImpostoToolStripMenuItem.Click += new System.EventHandler(this.repetirCódigoImpostoToolStripMenuItem_Click);
+            // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
@@ -686,6 +710,18 @@
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Text = "Calcular Vlr Unitario de Pedido 100%";
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Click += new System.EventHandler(this.calcularVlrUnitarioDePedido100ToolStripMenuItem_Click);
             // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(309, 6);
+            // 
+            // entrarDadosTelefoniaToolStripMenuItem
+            // 
+            this.entrarDadosTelefoniaToolStripMenuItem.Name = "entrarDadosTelefoniaToolStripMenuItem";
+            this.entrarDadosTelefoniaToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.entrarDadosTelefoniaToolStripMenuItem.Text = "Entrar Dados Telefonia";
+            this.entrarDadosTelefoniaToolStripMenuItem.Click += new System.EventHandler(this.entrarDadosTelefoniaToolStripMenuItem_Click);
+            // 
             // hotWordsToolStripMenuItem
             // 
             this.hotWordsToolStripMenuItem.Enabled = false;
@@ -697,6 +733,10 @@
             // 
             this.eGRToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.entrarEGREPrepararConsultaToolStripMenuItem,
+            this.pesquisarChavesDeAcessoToolStripMenuItem,
+            this.toolStripSeparator16,
+            this.CopiarChvOrigemeRefToolStripMenuItem,
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem,
             this.toolStripSeparator12,
             this.controleDeNFeToolStripMenuItem,
             this.toolStripSeparator10,
@@ -712,31 +752,46 @@
             // entrarEGREPrepararConsultaToolStripMenuItem
             // 
             this.entrarEGREPrepararConsultaToolStripMenuItem.Name = "entrarEGREPrepararConsultaToolStripMenuItem";
-            this.entrarEGREPrepararConsultaToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.entrarEGREPrepararConsultaToolStripMenuItem.Text = "Entrar EGR e Preparar Consulta";
+            this.entrarEGREPrepararConsultaToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.entrarEGREPrepararConsultaToolStripMenuItem.Text = "Entrar EGR e Consultar Chaves na Clipboard";
+            this.entrarEGREPrepararConsultaToolStripMenuItem.Click += new System.EventHandler(this.entrarEGREPrepararConsultaToolStripMenuItem_Click);
+            // 
+            // pesquisarChavesDeAcessoToolStripMenuItem
+            // 
+            this.pesquisarChavesDeAcessoToolStripMenuItem.Name = "pesquisarChavesDeAcessoToolStripMenuItem";
+            this.pesquisarChavesDeAcessoToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.pesquisarChavesDeAcessoToolStripMenuItem.Text = "Pesquisar Chave(s) de Acesso";
+            this.pesquisarChavesDeAcessoToolStripMenuItem.Click += new System.EventHandler(this.pesquisarChavesDeAcessoToolStripMenuItem_Click);
+            // 
+            // CopiarChvOrigemeRefToolStripMenuItem
+            // 
+            this.CopiarChvOrigemeRefToolStripMenuItem.Name = "CopiarChvOrigemeRefToolStripMenuItem";
+            this.CopiarChvOrigemeRefToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.CopiarChvOrigemeRefToolStripMenuItem.Text = "Copiar Chave Origem e Referência";
+            this.CopiarChvOrigemeRefToolStripMenuItem.Click += new System.EventHandler(this.CopiarChvOrigemeRefToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(249, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(301, 6);
             // 
             // controleDeNFeToolStripMenuItem
             // 
             this.controleDeNFeToolStripMenuItem.Name = "controleDeNFeToolStripMenuItem";
-            this.controleDeNFeToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.controleDeNFeToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.controleDeNFeToolStripMenuItem.Text = "Controle de NFe";
             this.controleDeNFeToolStripMenuItem.Click += new System.EventHandler(this.controleDeNFeToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(249, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(301, 6);
             // 
             // consultarProtocoloToolStripMenuItem
             // 
             this.consultarProtocoloToolStripMenuItem.Enabled = false;
             this.consultarProtocoloToolStripMenuItem.Name = "consultarProtocoloToolStripMenuItem";
-            this.consultarProtocoloToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.consultarProtocoloToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.consultarProtocoloToolStripMenuItem.Text = "Consultar Protocolo";
             this.consultarProtocoloToolStripMenuItem.Click += new System.EventHandler(this.consultarProtocoloToolStripMenuItem_Click);
             // 
@@ -744,26 +799,26 @@
             // 
             this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Enabled = false;
             this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Name = "consultarNaturezaOperaçãoNFsToolStripMenuItem";
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Text = "Consultar Natureza Operação NFs";
             this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Click += new System.EventHandler(this.consultarNaturezaOperaçãoNFsToolStripMenuItem_Click);
             // 
             // confirmarOperaçãoEmMassaToolStripMenuItem
             // 
             this.confirmarOperaçãoEmMassaToolStripMenuItem.Name = "confirmarOperaçãoEmMassaToolStripMenuItem";
-            this.confirmarOperaçãoEmMassaToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.confirmarOperaçãoEmMassaToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.confirmarOperaçãoEmMassaToolStripMenuItem.Text = "Confirmar Operação Em Massa";
             this.confirmarOperaçãoEmMassaToolStripMenuItem.Click += new System.EventHandler(this.confirmarOperaçãoEmMassaToolStripMenuItem_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(249, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(301, 6);
             // 
             // downloadXMLToolStripMenuItem
             // 
             this.downloadXMLToolStripMenuItem.Name = "downloadXMLToolStripMenuItem";
-            this.downloadXMLToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.downloadXMLToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.downloadXMLToolStripMenuItem.Text = "Download XML";
             this.downloadXMLToolStripMenuItem.Click += new System.EventHandler(this.downloadXMLToolStripMenuItem_Click);
             // 
@@ -793,17 +848,39 @@
             this.tsbQtdeRepeticoes,
             this.toolStripSeparator9,
             this.tsbRepeatCFOPServico,
-            this.tsbRepetirCodImposto});
+            this.tsbRepetirCodImposto,
+            this.toolStripSeparator15,
+            this.tsbtnPesqChvAcessoEGR});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(801, 25);
             this.toolStrip1.TabIndex = 8;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // tsbGravar
+            // 
+            this.tsbGravar.Image = ((System.Drawing.Image)(resources.GetObject("tsbGravar.Image")));
+            this.tsbGravar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbGravar.Name = "tsbGravar";
+            this.tsbGravar.Size = new System.Drawing.Size(61, 22);
+            this.tsbGravar.Text = "Gravar";
+            this.tsbGravar.ToolTipText = "Gravar alterações";
+            this.tsbGravar.Click += new System.EventHandler(this.tsbGravar_Click);
+            // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbRunSet
+            // 
+            this.tsbRunSet.Image = ((System.Drawing.Image)(resources.GetObject("tsbRunSet.Image")));
+            this.tsbRunSet.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRunSet.Name = "tsbRunSet";
+            this.tsbRunSet.Size = new System.Drawing.Size(71, 22);
+            this.tsbRunSet.Text = "Executar";
+            this.tsbRunSet.ToolTipText = "Executar conjunto de campos";
+            this.tsbRunSet.Click += new System.EventHandler(this.tsbRunSet_Click);
             // 
             // toolStripSeparator8
             // 
@@ -825,6 +902,38 @@
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbRepeatCFOPServico
+            // 
+            this.tsbRepeatCFOPServico.Image = ((System.Drawing.Image)(resources.GetObject("tsbRepeatCFOPServico.Image")));
+            this.tsbRepeatCFOPServico.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRepeatCFOPServico.Name = "tsbRepeatCFOPServico";
+            this.tsbRepeatCFOPServico.Size = new System.Drawing.Size(107, 22);
+            this.tsbRepeatCFOPServico.Text = "CFOP e Serviço";
+            this.tsbRepeatCFOPServico.Click += new System.EventHandler(this.tsbRepeatCFOPServico_Click);
+            // 
+            // tsbRepetirCodImposto
+            // 
+            this.tsbRepetirCodImposto.Image = ((System.Drawing.Image)(resources.GetObject("tsbRepetirCodImposto.Image")));
+            this.tsbRepetirCodImposto.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRepetirCodImposto.Name = "tsbRepetirCodImposto";
+            this.tsbRepetirCodImposto.Size = new System.Drawing.Size(113, 22);
+            this.tsbRepetirCodImposto.Text = "Código Imposto";
+            this.tsbRepetirCodImposto.Click += new System.EventHandler(this.tsbRepetirCodImposto_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbtnPesqChvAcessoEGR
+            // 
+            this.tsbtnPesqChvAcessoEGR.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnPesqChvAcessoEGR.Image")));
+            this.tsbtnPesqChvAcessoEGR.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnPesqChvAcessoEGR.Name = "tsbtnPesqChvAcessoEGR";
+            this.tsbtnPesqChvAcessoEGR.Size = new System.Drawing.Size(182, 22);
+            this.tsbtnPesqChvAcessoEGR.Text = "Pesquisar Chave(s) de Acesso";
+            this.tsbtnPesqChvAcessoEGR.Click += new System.EventHandler(this.tsbtnPesqChvAcessoEGR_Click);
             // 
             // imageList1
             // 
@@ -873,73 +982,17 @@
             this.chavesDeAcessoBindingSource.DataMember = "ChavesDeAcesso";
             this.chavesDeAcessoBindingSource.DataSource = this.fiscalDataSet;
             // 
-            // tsbGravar
+            // copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem
             // 
-            this.tsbGravar.Image = ((System.Drawing.Image)(resources.GetObject("tsbGravar.Image")));
-            this.tsbGravar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbGravar.Name = "tsbGravar";
-            this.tsbGravar.Size = new System.Drawing.Size(61, 22);
-            this.tsbGravar.Text = "Gravar";
-            this.tsbGravar.ToolTipText = "Gravar alterações";
-            this.tsbGravar.Click += new System.EventHandler(this.tsbGravar_Click);
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Name = "copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem";
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Text = "Copiar Chave Origem e Referência para Oper. Não Realizada";
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Click += new System.EventHandler(this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem_Click);
             // 
-            // tsbRunSet
+            // toolStripSeparator16
             // 
-            this.tsbRunSet.Image = ((System.Drawing.Image)(resources.GetObject("tsbRunSet.Image")));
-            this.tsbRunSet.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbRunSet.Name = "tsbRunSet";
-            this.tsbRunSet.Size = new System.Drawing.Size(71, 22);
-            this.tsbRunSet.Text = "Executar";
-            this.tsbRunSet.ToolTipText = "Executar conjunto de campos";
-            this.tsbRunSet.Click += new System.EventHandler(this.tsbRunSet_Click);
-            // 
-            // tsbRepeatCFOPServico
-            // 
-            this.tsbRepeatCFOPServico.Image = ((System.Drawing.Image)(resources.GetObject("tsbRepeatCFOPServico.Image")));
-            this.tsbRepeatCFOPServico.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbRepeatCFOPServico.Name = "tsbRepeatCFOPServico";
-            this.tsbRepeatCFOPServico.Size = new System.Drawing.Size(107, 22);
-            this.tsbRepeatCFOPServico.Text = "CFOP e Serviço";
-            this.tsbRepeatCFOPServico.Click += new System.EventHandler(this.tsbRepeatCFOPServico_Click);
-            // 
-            // tsbRepetirCodImposto
-            // 
-            this.tsbRepetirCodImposto.Image = ((System.Drawing.Image)(resources.GetObject("tsbRepetirCodImposto.Image")));
-            this.tsbRepetirCodImposto.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbRepetirCodImposto.Name = "tsbRepetirCodImposto";
-            this.tsbRepetirCodImposto.Size = new System.Drawing.Size(113, 22);
-            this.tsbRepetirCodImposto.Text = "Código Imposto";
-            this.tsbRepetirCodImposto.Click += new System.EventHandler(this.tsbRepetirCodImposto_Click);
-            // 
-            // repetirCFOPEServiçoToolStripMenuItem
-            // 
-            this.repetirCFOPEServiçoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("repetirCFOPEServiçoToolStripMenuItem.Image")));
-            this.repetirCFOPEServiçoToolStripMenuItem.Name = "repetirCFOPEServiçoToolStripMenuItem";
-            this.repetirCFOPEServiçoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F2)));
-            this.repetirCFOPEServiçoToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
-            this.repetirCFOPEServiçoToolStripMenuItem.Text = "Repetir CFOP e Serviço";
-            this.repetirCFOPEServiçoToolStripMenuItem.Click += new System.EventHandler(this.repetirCFOPEServiçoToolStripMenuItem_Click);
-            // 
-            // repetirCódigoImpostoToolStripMenuItem
-            // 
-            this.repetirCódigoImpostoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("repetirCódigoImpostoToolStripMenuItem.Image")));
-            this.repetirCódigoImpostoToolStripMenuItem.Name = "repetirCódigoImpostoToolStripMenuItem";
-            this.repetirCódigoImpostoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
-            this.repetirCódigoImpostoToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
-            this.repetirCódigoImpostoToolStripMenuItem.Text = "Repetir Código Imposto";
-            this.repetirCódigoImpostoToolStripMenuItem.Click += new System.EventHandler(this.repetirCódigoImpostoToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator14
-            // 
-            this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(309, 6);
-            // 
-            // entrarDadosTelefoniaToolStripMenuItem
-            // 
-            this.entrarDadosTelefoniaToolStripMenuItem.Name = "entrarDadosTelefoniaToolStripMenuItem";
-            this.entrarDadosTelefoniaToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
-            this.entrarDadosTelefoniaToolStripMenuItem.Text = "Entrar Dados Telefonia";
-            this.entrarDadosTelefoniaToolStripMenuItem.Click += new System.EventHandler(this.entrarDadosTelefoniaToolStripMenuItem_Click);
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(388, 6);
             // 
             // MainForm
             // 
@@ -958,6 +1011,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.mainTabControl.ResumeLayout(false);
             this.tabPageConjunto.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvConjunto)).EndInit();
@@ -1086,6 +1140,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripMenuItem entrarDadosTelefoniaToolStripMenuItem;
         public FiscalDataSet fiscalDataSet;
+        private System.Windows.Forms.ToolStripMenuItem pesquisarChavesDeAcessoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripButton tsbtnPesqChvAcessoEGR;
+        private System.Windows.Forms.ToolStripMenuItem CopiarChvOrigemeRefToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
+        private System.Windows.Forms.ToolStripMenuItem copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem;
     }
 }
 
