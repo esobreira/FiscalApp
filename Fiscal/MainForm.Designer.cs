@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.tabPageConjunto = new System.Windows.Forms.TabPage();
@@ -78,8 +78,6 @@
             this.repetir25xECopiarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.aplicativoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reiniciarTextosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.sempreNoTopoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.obterLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,24 +85,19 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copiarÚltimaPalavraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.repetirCFOPEServiçoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repetirCódigoImpostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.entrarDadosTelefoniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hotWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eGRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entrarEGREPrepararConsultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pesquisarChavesDeAcessoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             this.CopiarChvOrigemeRefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.controleDeNFeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.consultarProtocoloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.confirmarOperaçãoEmMassaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.downloadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,8 +125,8 @@
             this.bsObterConfigConjunto = new System.Windows.Forms.BindingSource(this.components);
             this.taObterConfigConjunto = new FiscalApp.FiscalDataSetTableAdapters.ObterConfigConjuntoTableAdapter();
             this.chavesDeAcessoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.conectarDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.mainTabControl.SuspendLayout();
             this.tabPageConjunto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConjunto)).BeginInit();
@@ -339,8 +332,8 @@
             // qtdeRepeticoesDataGridViewTextBoxColumn
             // 
             this.qtdeRepeticoesDataGridViewTextBoxColumn.DataPropertyName = "QtdeRepeticoes";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.NullValue = "0";
+            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.qtdeRepeticoesDataGridViewTextBoxColumn.HeaderText = "Qtde. Repetições";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.Name = "qtdeRepeticoesDataGridViewTextBoxColumn";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.ReadOnly = true;
@@ -504,64 +497,62 @@
             this.repetir20xECopiarToolStripMenuItem,
             this.repetir25xECopiarToolStripMenuItem});
             this.cntxLinkLabel.Name = "cntxLinkLabel";
-            this.cntxLinkLabel.Size = new System.Drawing.Size(215, 170);
+            this.cntxLinkLabel.Size = new System.Drawing.Size(179, 170);
             // 
             // adicionarParaHotWordToolStripMenuItem
             // 
             this.adicionarParaHotWordToolStripMenuItem.Name = "adicionarParaHotWordToolStripMenuItem";
-            this.adicionarParaHotWordToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.adicionarParaHotWordToolStripMenuItem.Text = "Adicionar como Hot Word";
-            this.adicionarParaHotWordToolStripMenuItem.Click += new System.EventHandler(this.adicionarParaHotWordToolStripMenuItem_Click);
+            this.adicionarParaHotWordToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(211, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(175, 6);
             // 
             // copiarToolStripMenuItem
             // 
             this.copiarToolStripMenuItem.Name = "copiarToolStripMenuItem";
-            this.copiarToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.copiarToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.copiarToolStripMenuItem.Text = "Copiar";
             this.copiarToolStripMenuItem.Click += new System.EventHandler(this.copiarToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(211, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(175, 6);
             // 
             // repetir5xECopiarToolStripMenuItem
             // 
             this.repetir5xECopiarToolStripMenuItem.Name = "repetir5xECopiarToolStripMenuItem";
-            this.repetir5xECopiarToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.repetir5xECopiarToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.repetir5xECopiarToolStripMenuItem.Text = "Repetir 5x e Copiar";
             this.repetir5xECopiarToolStripMenuItem.Click += new System.EventHandler(this.repetir5xECopiarToolStripMenuItem_Click);
             // 
             // repetir10xECopiarToolStripMenuItem
             // 
             this.repetir10xECopiarToolStripMenuItem.Name = "repetir10xECopiarToolStripMenuItem";
-            this.repetir10xECopiarToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.repetir10xECopiarToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.repetir10xECopiarToolStripMenuItem.Text = "Repetir 10x e Copiar";
             this.repetir10xECopiarToolStripMenuItem.Click += new System.EventHandler(this.repetir10xECopiarToolStripMenuItem_Click);
             // 
             // repetir15xECopiarToolStripMenuItem
             // 
             this.repetir15xECopiarToolStripMenuItem.Name = "repetir15xECopiarToolStripMenuItem";
-            this.repetir15xECopiarToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.repetir15xECopiarToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.repetir15xECopiarToolStripMenuItem.Text = "Repetir 15x e Copiar";
             this.repetir15xECopiarToolStripMenuItem.Click += new System.EventHandler(this.repetir15xECopiarToolStripMenuItem_Click);
             // 
             // repetir20xECopiarToolStripMenuItem
             // 
             this.repetir20xECopiarToolStripMenuItem.Name = "repetir20xECopiarToolStripMenuItem";
-            this.repetir20xECopiarToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.repetir20xECopiarToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.repetir20xECopiarToolStripMenuItem.Text = "Repetir 20x e Copiar";
             this.repetir20xECopiarToolStripMenuItem.Click += new System.EventHandler(this.repetir20xECopiarToolStripMenuItem_Click);
             // 
             // repetir25xECopiarToolStripMenuItem
             // 
             this.repetir25xECopiarToolStripMenuItem.Name = "repetir25xECopiarToolStripMenuItem";
-            this.repetir25xECopiarToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.repetir25xECopiarToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.repetir25xECopiarToolStripMenuItem.Text = "Repetir 25x e Copiar";
             this.repetir25xECopiarToolStripMenuItem.Click += new System.EventHandler(this.repetir25xECopiarToolStripMenuItem_Click);
             // 
@@ -570,7 +561,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aplicativoToolStripMenuItem,
             this.editarToolStripMenuItem,
-            this.hotWordsToolStripMenuItem,
             this.eGRToolStripMenuItem,
             this.sobreToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -582,31 +572,17 @@
             // aplicativoToolStripMenuItem
             // 
             this.aplicativoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reiniciarTextosToolStripMenuItem,
-            this.toolStripSeparator4,
             this.sempreNoTopoToolStripMenuItem,
             this.toolStripSeparator3,
             this.obterLocationToolStripMenuItem,
             this.posicionarEmCoordenadasToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.conectarDatabaseToolStripMenuItem,
             this.toolStripSeparator1,
             this.sairToolStripMenuItem});
             this.aplicativoToolStripMenuItem.Name = "aplicativoToolStripMenuItem";
             this.aplicativoToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.aplicativoToolStripMenuItem.Text = "Aplicativo";
-            // 
-            // reiniciarTextosToolStripMenuItem
-            // 
-            this.reiniciarTextosToolStripMenuItem.Name = "reiniciarTextosToolStripMenuItem";
-            this.reiniciarTextosToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
-            this.reiniciarTextosToolStripMenuItem.Text = "Reiniciar Textos";
-            this.reiniciarTextosToolStripMenuItem.Visible = false;
-            this.reiniciarTextosToolStripMenuItem.Click += new System.EventHandler(this.reiniciarTextosToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(291, 6);
-            this.toolStripSeparator4.Visible = false;
             // 
             // sempreNoTopoToolStripMenuItem
             // 
@@ -653,8 +629,6 @@
             // editarToolStripMenuItem
             // 
             this.editarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copiarÚltimaPalavraToolStripMenuItem,
-            this.toolStripSeparator6,
             this.repetirCFOPEServiçoToolStripMenuItem,
             this.repetirCódigoImpostoToolStripMenuItem,
             this.toolStripSeparator13,
@@ -665,26 +639,11 @@
             this.editarToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.editarToolStripMenuItem.Text = "Editar";
             // 
-            // copiarÚltimaPalavraToolStripMenuItem
-            // 
-            this.copiarÚltimaPalavraToolStripMenuItem.Name = "copiarÚltimaPalavraToolStripMenuItem";
-            this.copiarÚltimaPalavraToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
-            this.copiarÚltimaPalavraToolStripMenuItem.Text = "Copiar Última Palavra";
-            this.copiarÚltimaPalavraToolStripMenuItem.Visible = false;
-            this.copiarÚltimaPalavraToolStripMenuItem.Click += new System.EventHandler(this.copiarÚltimaPalavraToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(309, 6);
-            this.toolStripSeparator6.Visible = false;
-            // 
             // repetirCFOPEServiçoToolStripMenuItem
             // 
             this.repetirCFOPEServiçoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("repetirCFOPEServiçoToolStripMenuItem.Image")));
             this.repetirCFOPEServiçoToolStripMenuItem.Name = "repetirCFOPEServiçoToolStripMenuItem";
-            this.repetirCFOPEServiçoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F2)));
-            this.repetirCFOPEServiçoToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.repetirCFOPEServiçoToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.repetirCFOPEServiçoToolStripMenuItem.Text = "Repetir CFOP e Serviço";
             this.repetirCFOPEServiçoToolStripMenuItem.Click += new System.EventHandler(this.repetirCFOPEServiçoToolStripMenuItem_Click);
             // 
@@ -692,42 +651,33 @@
             // 
             this.repetirCódigoImpostoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("repetirCódigoImpostoToolStripMenuItem.Image")));
             this.repetirCódigoImpostoToolStripMenuItem.Name = "repetirCódigoImpostoToolStripMenuItem";
-            this.repetirCódigoImpostoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
-            this.repetirCódigoImpostoToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.repetirCódigoImpostoToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.repetirCódigoImpostoToolStripMenuItem.Text = "Repetir Código Imposto";
             this.repetirCódigoImpostoToolStripMenuItem.Click += new System.EventHandler(this.repetirCódigoImpostoToolStripMenuItem_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(309, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(263, 6);
             // 
             // calcularVlrUnitarioDePedido100ToolStripMenuItem
             // 
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Name = "calcularVlrUnitarioDePedido100ToolStripMenuItem";
-            this.calcularVlrUnitarioDePedido100ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Text = "Calcular Vlr Unitario de Pedido 100%";
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem.Click += new System.EventHandler(this.calcularVlrUnitarioDePedido100ToolStripMenuItem_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(309, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(263, 6);
             // 
             // entrarDadosTelefoniaToolStripMenuItem
             // 
             this.entrarDadosTelefoniaToolStripMenuItem.Name = "entrarDadosTelefoniaToolStripMenuItem";
-            this.entrarDadosTelefoniaToolStripMenuItem.Size = new System.Drawing.Size(312, 22);
+            this.entrarDadosTelefoniaToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.entrarDadosTelefoniaToolStripMenuItem.Text = "Entrar Dados Telefonia";
             this.entrarDadosTelefoniaToolStripMenuItem.Click += new System.EventHandler(this.entrarDadosTelefoniaToolStripMenuItem_Click);
-            // 
-            // hotWordsToolStripMenuItem
-            // 
-            this.hotWordsToolStripMenuItem.Enabled = false;
-            this.hotWordsToolStripMenuItem.Name = "hotWordsToolStripMenuItem";
-            this.hotWordsToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.hotWordsToolStripMenuItem.Text = "Hot Words";
             // 
             // eGRToolStripMenuItem
             // 
@@ -738,10 +688,6 @@
             this.CopiarChvOrigemeRefToolStripMenuItem,
             this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem,
             this.toolStripSeparator12,
-            this.controleDeNFeToolStripMenuItem,
-            this.toolStripSeparator10,
-            this.consultarProtocoloToolStripMenuItem,
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem,
             this.confirmarOperaçãoEmMassaToolStripMenuItem,
             this.toolStripSeparator11,
             this.downloadXMLToolStripMenuItem});
@@ -752,73 +698,58 @@
             // entrarEGREPrepararConsultaToolStripMenuItem
             // 
             this.entrarEGREPrepararConsultaToolStripMenuItem.Name = "entrarEGREPrepararConsultaToolStripMenuItem";
-            this.entrarEGREPrepararConsultaToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.entrarEGREPrepararConsultaToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
             this.entrarEGREPrepararConsultaToolStripMenuItem.Text = "Entrar EGR e Consultar Chaves na Clipboard";
             this.entrarEGREPrepararConsultaToolStripMenuItem.Click += new System.EventHandler(this.entrarEGREPrepararConsultaToolStripMenuItem_Click);
             // 
             // pesquisarChavesDeAcessoToolStripMenuItem
             // 
             this.pesquisarChavesDeAcessoToolStripMenuItem.Name = "pesquisarChavesDeAcessoToolStripMenuItem";
-            this.pesquisarChavesDeAcessoToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.pesquisarChavesDeAcessoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
+            this.pesquisarChavesDeAcessoToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
             this.pesquisarChavesDeAcessoToolStripMenuItem.Text = "Pesquisar Chave(s) de Acesso";
             this.pesquisarChavesDeAcessoToolStripMenuItem.Click += new System.EventHandler(this.pesquisarChavesDeAcessoToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(387, 6);
             // 
             // CopiarChvOrigemeRefToolStripMenuItem
             // 
             this.CopiarChvOrigemeRefToolStripMenuItem.Name = "CopiarChvOrigemeRefToolStripMenuItem";
-            this.CopiarChvOrigemeRefToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.CopiarChvOrigemeRefToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
             this.CopiarChvOrigemeRefToolStripMenuItem.Text = "Copiar Chave Origem e Referência";
             this.CopiarChvOrigemeRefToolStripMenuItem.Click += new System.EventHandler(this.CopiarChvOrigemeRefToolStripMenuItem_Click);
+            // 
+            // copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem
+            // 
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Name = "copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem";
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Text = "Copiar Chave Origem e Referência para Oper. Não Realizada";
+            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Click += new System.EventHandler(this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(301, 6);
-            // 
-            // controleDeNFeToolStripMenuItem
-            // 
-            this.controleDeNFeToolStripMenuItem.Name = "controleDeNFeToolStripMenuItem";
-            this.controleDeNFeToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
-            this.controleDeNFeToolStripMenuItem.Text = "Controle de NFe";
-            this.controleDeNFeToolStripMenuItem.Click += new System.EventHandler(this.controleDeNFeToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(301, 6);
-            // 
-            // consultarProtocoloToolStripMenuItem
-            // 
-            this.consultarProtocoloToolStripMenuItem.Enabled = false;
-            this.consultarProtocoloToolStripMenuItem.Name = "consultarProtocoloToolStripMenuItem";
-            this.consultarProtocoloToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
-            this.consultarProtocoloToolStripMenuItem.Text = "Consultar Protocolo";
-            this.consultarProtocoloToolStripMenuItem.Click += new System.EventHandler(this.consultarProtocoloToolStripMenuItem_Click);
-            // 
-            // consultarNaturezaOperaçãoNFsToolStripMenuItem
-            // 
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Enabled = false;
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Name = "consultarNaturezaOperaçãoNFsToolStripMenuItem";
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Text = "Consultar Natureza Operação NFs";
-            this.consultarNaturezaOperaçãoNFsToolStripMenuItem.Click += new System.EventHandler(this.consultarNaturezaOperaçãoNFsToolStripMenuItem_Click);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(387, 6);
             // 
             // confirmarOperaçãoEmMassaToolStripMenuItem
             // 
             this.confirmarOperaçãoEmMassaToolStripMenuItem.Name = "confirmarOperaçãoEmMassaToolStripMenuItem";
-            this.confirmarOperaçãoEmMassaToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.confirmarOperaçãoEmMassaToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
             this.confirmarOperaçãoEmMassaToolStripMenuItem.Text = "Confirmar Operação Em Massa";
             this.confirmarOperaçãoEmMassaToolStripMenuItem.Click += new System.EventHandler(this.confirmarOperaçãoEmMassaToolStripMenuItem_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(301, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(387, 6);
             // 
             // downloadXMLToolStripMenuItem
             // 
             this.downloadXMLToolStripMenuItem.Name = "downloadXMLToolStripMenuItem";
-            this.downloadXMLToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.downloadXMLToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
             this.downloadXMLToolStripMenuItem.Text = "Download XML";
             this.downloadXMLToolStripMenuItem.Click += new System.EventHandler(this.downloadXMLToolStripMenuItem_Click);
             // 
@@ -982,17 +913,17 @@
             this.chavesDeAcessoBindingSource.DataMember = "ChavesDeAcesso";
             this.chavesDeAcessoBindingSource.DataSource = this.fiscalDataSet;
             // 
-            // copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem
+            // conectarDatabaseToolStripMenuItem
             // 
-            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Name = "copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem";
-            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Size = new System.Drawing.Size(390, 22);
-            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Text = "Copiar Chave Origem e Referência para Oper. Não Realizada";
-            this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem.Click += new System.EventHandler(this.copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem_Click);
+            this.conectarDatabaseToolStripMenuItem.Name = "conectarDatabaseToolStripMenuItem";
+            this.conectarDatabaseToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
+            this.conectarDatabaseToolStripMenuItem.Text = "Conectar Database";
+            this.conectarDatabaseToolStripMenuItem.Click += new System.EventHandler(this.conectarDatabaseToolStripMenuItem_Click);
             // 
-            // toolStripSeparator16
+            // toolStripSeparator4
             // 
-            this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(388, 6);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(291, 6);
             // 
             // MainForm
             // 
@@ -1047,10 +978,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem aplicativoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reiniciarTextosToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem editarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copiarÚltimaPalavraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repetir5xECopiarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repetir10xECopiarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repetir15xECopiarToolStripMenuItem;
@@ -1059,13 +988,10 @@
         public System.Windows.Forms.ContextMenuStrip cntxLinkLabel;
         private System.Windows.Forms.ToolStripMenuItem copiarToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem hotWordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adicionarParaHotWordToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem sempreNoTopoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem obterLocationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem repetirCFOPEServiçoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TabPage tabPageConjunto;
@@ -1121,15 +1047,11 @@
         private System.Windows.Forms.ToolStripMenuItem localDaInstalaçãoToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPageChavesAcesso;
         private System.Windows.Forms.ToolStripMenuItem eGRToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem consultarProtocoloToolStripMenuItem;
         private System.Windows.Forms.BindingSource chavesDeAcessoBindingSource;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TextBox txtResultadoConsulta;
         private System.Windows.Forms.TextBox txtChavesDeAcesso;
-        private System.Windows.Forms.ToolStripMenuItem consultarNaturezaOperaçãoNFsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem confirmarOperaçãoEmMassaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem controleDeNFeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem entrarEGREPrepararConsultaToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
@@ -1146,6 +1068,8 @@
         private System.Windows.Forms.ToolStripMenuItem CopiarChvOrigemeRefToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
         private System.Windows.Forms.ToolStripMenuItem copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem conectarDatabaseToolStripMenuItem;
     }
 }
 

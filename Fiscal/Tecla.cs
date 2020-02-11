@@ -16,7 +16,7 @@ namespace FiscalApp
 
         public Tecla()
         {
-            this.AcaoPredefinida = AcoesPredefinidas.Nenhum;
+            //this.AcaoPredefinida = AcoesPredefinidas.Nenhum;
         }
 
         public Tecla(string Tecla)

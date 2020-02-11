@@ -83,7 +83,7 @@ namespace FiscalApp
             send(NumeroNF.Text);
 
             MainForm.clickEditingControl(DATA_LANCAMENTO);
-            MainForm.selectTextAndClear();
+            Teclado.selectTextAndClear();
             send(DataLancamento.Text);
 
             MainForm.clickEditingControl(VLR_NF);
@@ -128,7 +128,7 @@ namespace FiscalApp
             if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             MainForm.clickEditingControl(COL_CFOP_GRID);
-            MainForm.selectTextAndClear();
+            Teclado.selectTextAndClear();
             send(CFOPTelefonia.Text);
             send("{ENTER}");
 
@@ -140,7 +140,7 @@ namespace FiscalApp
             MainForm.clickEditingControl(CLICK_IMPOSTOS);
 
             MainForm.clickEditingControl(VLR_OUTRA_BASE);
-            MainForm.selectTextAndClear();
+            Teclado.selectTextAndClear();
             send(BaseCalculoNF.Text);
 
             MainForm.clickEditingControl(VLR_ISENTAS);

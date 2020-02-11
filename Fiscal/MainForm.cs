@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using static FiscalApp.Acao;
 using static FiscalApp.FiscalDataSet;
 
 namespace FiscalApp
@@ -23,12 +22,6 @@ namespace FiscalApp
 
         const int MAX_ITENS_PER_PAGE = 18;
         const int WAIT_TIME_QUERY_NF = 7500;
-
-        public enum MouseButton
-        {
-            RIGHT = 1,
-            LEFT = 2
-        }
 
         //private CamposTableAdapter camposTableAdapter = new CamposTableAdapter();
         //private ConjuntoTableAdapter conjuntoTableAdapter = new ConjuntoTableAdapter();
@@ -95,58 +88,28 @@ namespace FiscalApp
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-#if DEBUG
-            var sqlConnection = DatabaseConnection.DEBUGConnection;
-            taConjunto.Connection = sqlConnection;
-            taCampos.Connection = sqlConnection;
-            taConjuntoCampos.Connection = sqlConnection;
-            taListarDadosConjunto.Connection = sqlConnection;
-            //#else
-            //            sb.AppendLine(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=");
-            //            sb.Append(System.IO.Path.GetDirectoryName(Application.UserAppDataPath) + @"\Data\App_Data\Database.mdf");
-            //            sb.Append(";Integrated Security=True");
+            
+            //if (!string.IsNullOrEmpty(FiscalApp.Properties.Settings.Default.HotWords))
+            //{
+            //    string[] words = FiscalApp.Properties.Settings.Default.HotWords.Split(new char[] { '|' });
 
-            //            global::FiscalApp.Properties.Settings.Default.dbProgram = sb.ToString();
-#endif
+            //    if (words.Length > 0)
+            //    {
+            //        foreach (string word in words)
+            //        {
+            //            if (!string.IsNullOrEmpty(word))
+            //            {
+            //                hotwords.Add(word, word);
+            //            }
+            //        }
 
-            try
-            {
-                taConjunto.Fill(fiscalDataSet.Conjunto);
-                taCampos.Fill(fiscalDataSet.Campos);
-                taConjuntoCampos.Fill(fiscalDataSet.ConjuntoCampos);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            whnd = AutoItX.WinGetHandle(Text);
-
-            dgvConjunto.DataError += dataGridView_DataError;
-            dgvCampos.DataError += dataGridView_DataError;
-            dgvConjuntoCampos.DataError += dataGridView_DataError;
-
-            if (!string.IsNullOrEmpty(FiscalApp.Properties.Settings.Default.HotWords))
-            {
-                string[] words = FiscalApp.Properties.Settings.Default.HotWords.Split(new char[] { '|' });
-
-                if (words.Length > 0)
-                {
-                    foreach (string word in words)
-                    {
-                        if (!string.IsNullOrEmpty(word))
-                        {
-                            hotwords.Add(word, word);
-                        }
-                    }
-
-                    // creates ordered menu items
-                    foreach (KeyValuePair<string, string> item in hotwords)
-                    {
-                        criarHotWordMenu(item.Value);
-                    }
-                }
-            }
+            //        // creates ordered menu items
+            //        foreach (KeyValuePair<string, string> item in hotwords)
+            //        {
+            //            criarHotWordMenu(item.Value);
+            //        }
+            //    }
+            //}
         }
 
         private void dataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -156,19 +119,9 @@ namespace FiscalApp
             e.Cancel = true;
         }
 
-        private void reiniciarTextosToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void copiarÚltimaPalavraToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(Program._lastWord);
         }
 
         private string repeatXTimes(int times, string value)
@@ -252,103 +205,101 @@ namespace FiscalApp
             //tryToInsertTextOnSAP();
         }
 
-        private void criarHotWordMenu(string texto)
-        {
-            ToolStripMenuItem menu = new ToolStripMenuItem()
-            {
-                Text = texto,
-                Tag = "copiarx"
-            };
+        //private void criarHotWordMenu(string texto)
+        //{
+        //    ToolStripMenuItem menu = new ToolStripMenuItem()
+        //    {
+        //        Text = texto,
+        //        Tag = "copiarx"
+        //    };
 
-            menu.Click += copiarToolStripMenuItem_Click;
+        //    menu.Click += copiarToolStripMenuItem_Click;
 
-            #region "Cria os sub-menus para os hotwords"
-            ToolStripMenuItem copiar = new ToolStripMenuItem()
-            {
-                Text = copiarToolStripMenuItem.Text,
-                Tag = "copiarx"
-            };
-            copiar.Click += copiarToolStripMenuItem_Click;
-            menu.DropDownItems.Add(copiar);
+        //    #region "Cria os sub-menus para os hotwords"
+        //    ToolStripMenuItem copiar = new ToolStripMenuItem()
+        //    {
+        //        Text = copiarToolStripMenuItem.Text,
+        //        Tag = "copiarx"
+        //    };
+        //    copiar.Click += copiarToolStripMenuItem_Click;
+        //    menu.DropDownItems.Add(copiar);
 
-            menu.DropDownItems.Add(new ToolStripSeparator());
+        //    menu.DropDownItems.Add(new ToolStripSeparator());
 
-            //ToolStripMenuItem inserirNoSAP = new ToolStripMenuItem()
-            //{
-            //    Text = inserirNoSAPToolStripMenuItem.Text,
-            //    Tag = "inserirNoSAP"
-            //};
-            //inserirNoSAP.Click += adicionarNoSAPToolStripMenuItem_Click;
-            //menu.DropDownItems.Add(inserirNoSAP);
+        //    //ToolStripMenuItem inserirNoSAP = new ToolStripMenuItem()
+        //    //{
+        //    //    Text = inserirNoSAPToolStripMenuItem.Text,
+        //    //    Tag = "inserirNoSAP"
+        //    //};
+        //    //inserirNoSAP.Click += adicionarNoSAPToolStripMenuItem_Click;
+        //    //menu.DropDownItems.Add(inserirNoSAP);
 
-            //menu.DropDownItems.Add(new ToolStripSeparator());
+        //    //menu.DropDownItems.Add(new ToolStripSeparator());
 
-            ToolStripMenuItem repetir5x = new ToolStripMenuItem()
-            {
-                Text = repetir5xECopiarToolStripMenuItem.Text,
-                Tag = "copiarx"
-            };
-            repetir5x.Click += repetir5xECopiarToolStripMenuItem_Click;
-            menu.DropDownItems.Add(repetir5x);
+        //    ToolStripMenuItem repetir5x = new ToolStripMenuItem()
+        //    {
+        //        Text = repetir5xECopiarToolStripMenuItem.Text,
+        //        Tag = "copiarx"
+        //    };
+        //    repetir5x.Click += repetir5xECopiarToolStripMenuItem_Click;
+        //    menu.DropDownItems.Add(repetir5x);
 
-            ToolStripMenuItem repetir10x = new ToolStripMenuItem()
-            {
-                Text = repetir10xECopiarToolStripMenuItem.Text,
-                Tag = "copiarx"
-            };
-            repetir10x.Click += repetir10xECopiarToolStripMenuItem_Click;
-            menu.DropDownItems.Add(repetir10x);
+        //    ToolStripMenuItem repetir10x = new ToolStripMenuItem()
+        //    {
+        //        Text = repetir10xECopiarToolStripMenuItem.Text,
+        //        Tag = "copiarx"
+        //    };
+        //    repetir10x.Click += repetir10xECopiarToolStripMenuItem_Click;
+        //    menu.DropDownItems.Add(repetir10x);
 
-            ToolStripMenuItem repetir15x = new ToolStripMenuItem()
-            {
-                Text = repetir15xECopiarToolStripMenuItem.Text,
-                Tag = "copiarx"
-            };
-            repetir15x.Click += repetir15xECopiarToolStripMenuItem_Click;
-            menu.DropDownItems.Add(repetir15x);
+        //    ToolStripMenuItem repetir15x = new ToolStripMenuItem()
+        //    {
+        //        Text = repetir15xECopiarToolStripMenuItem.Text,
+        //        Tag = "copiarx"
+        //    };
+        //    repetir15x.Click += repetir15xECopiarToolStripMenuItem_Click;
+        //    menu.DropDownItems.Add(repetir15x);
 
-            ToolStripMenuItem repetir20x = new ToolStripMenuItem()
-            {
-                Text = repetir20xECopiarToolStripMenuItem.Text,
-                Tag = "copiarx"
-            };
-            repetir20x.Click += repetir20xECopiarToolStripMenuItem_Click;
-            menu.DropDownItems.Add(repetir20x);
+        //    ToolStripMenuItem repetir20x = new ToolStripMenuItem()
+        //    {
+        //        Text = repetir20xECopiarToolStripMenuItem.Text,
+        //        Tag = "copiarx"
+        //    };
+        //    repetir20x.Click += repetir20xECopiarToolStripMenuItem_Click;
+        //    menu.DropDownItems.Add(repetir20x);
 
-            ToolStripMenuItem repetir25x = new ToolStripMenuItem()
-            {
-                Text = repetir25xECopiarToolStripMenuItem.Text,
-                Tag = "copiarx"
-            };
-            repetir25x.Click += repetir25xECopiarToolStripMenuItem_Click;
-            menu.DropDownItems.Add(repetir25x);
+        //    ToolStripMenuItem repetir25x = new ToolStripMenuItem()
+        //    {
+        //        Text = repetir25xECopiarToolStripMenuItem.Text,
+        //        Tag = "copiarx"
+        //    };
+        //    repetir25x.Click += repetir25xECopiarToolStripMenuItem_Click;
+        //    menu.DropDownItems.Add(repetir25x);
 
-            #endregion
+        //    #endregion
 
-            //inserirNoSAP.DropDownItems.AddRange(new ToolStripItem[]
-            //{
-            //    repetir5x,
-            //    repetir10x,
-            //    repetir15x,
-            //    repetir20x,
-            //    repetir25x
-            //});
+        //    //inserirNoSAP.DropDownItems.AddRange(new ToolStripItem[]
+        //    //{
+        //    //    repetir5x,
+        //    //    repetir10x,
+        //    //    repetir15x,
+        //    //    repetir20x,
+        //    //    repetir25x
+        //    //});
+        //}
 
-            hotWordsToolStripMenuItem.DropDownItems.Add(menu);
-        }
-
-        private void adicionarParaHotWordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string texto = getSourceControlString(sender);
-            if (hotwords.ContainsValue(texto))
-            {
-                MessageBox.Show("HotWord já existe.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                criarHotWordMenu(texto);
-            }
-        }
+        //private void adicionarParaHotWordToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    string texto = getSourceControlString(sender);
+        //    if (hotwords.ContainsValue(texto))
+        //    {
+        //        MessageBox.Show("HotWord já existe.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //    }
+        //    else
+        //    {
+        //        criarHotWordMenu(texto);
+        //    }
+        //}
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -371,7 +322,7 @@ namespace FiscalApp
         /// <param name="toolTip">ToolTip</param>
         /// <param name="noWait">Não aguardar</param>
         /// <param name="waitTime">Tempo de espera em milisegundos antes do click</param>
-        public static void clickEditingControl(int x, int y, string toolTip = "", bool noWait = true, int waitTime = 1000, int mouseSpeed = 5, MouseButton button = MouseButton.LEFT, int numClicks = 1)
+        public static void clickEditingControl(int x, int y, string toolTip = "", bool noWait = true, int waitTime = 1000, int mouseSpeed = 5, AcaoBaseClass.MouseButton button = AcaoBaseClass.MouseButton.LEFT, int numClicks = 1)
         {
             // points mouse
             AutoItX.MouseMove(x, y + SAP_Y_COORD_OFFSET, mouseSpeed);
@@ -379,7 +330,7 @@ namespace FiscalApp
             //AutoItX.MouseClick("LEFT", x, y - SAP_Y_COORD_OFFSET, 1, 5);
 
             string _button = "LEFT";
-            if (button == MouseButton.RIGHT)
+            if (button == AcaoBaseClass.MouseButton.RIGHT)
             {
                 _button = "RIGHT";
             }
@@ -416,53 +367,11 @@ namespace FiscalApp
             return Clipboard.GetText();
         }
 
-        public static string returnEntireTextSelected()
-        {
-            AutoItX.Send("{HOME}");
-            AutoItX.Send("{SHIFTDOWN}");
-            AutoItX.Send("+{END}");
-            AutoItX.Send("{SHIFTUP}");
-            AutoItX.Send("^c");
-            return Clipboard.GetText();
-        }
-
-        public static void copyEntireTextToClipboard()
-        {
-            AutoItX.Send("{HOME}");
-            AutoItX.Send("{SHIFTDOWN}");
-            AutoItX.Send("+{END}");
-            AutoItX.Send("{SHIFTUP}");
-            AutoItX.Send("^c");
-            Clipboard.GetText();
-        }
-
         private string selectAndGetTextFromCursor()
         {
             AutoItX.Send("+{END}");
             AutoItX.Send("^c");
             return Clipboard.GetText();
-        }
-
-        public static void selecEntireTextFromControl()
-        {
-            AutoItX.Send("{HOME}");
-            AutoItX.Send("{SHIFTDOWN}");
-            AutoItX.Send("+{END}");
-            AutoItX.Send("{SHIFTUP}");
-        }
-
-        private void clearTextSelected()
-        {
-            AutoItX.Send("{DELETE}");
-        }
-
-        public static void selectTextAndClear()
-        {
-            AutoItX.Send("{HOME}");
-            AutoItX.Send("{SHIFTDOWN}");
-            AutoItX.Send("+{END}");
-            AutoItX.Send("{SHIFTUP}");
-            AutoItX.Send("{DELETE}");
         }
 
         private void sendTextFromClipboard()
@@ -517,8 +426,8 @@ namespace FiscalApp
 
         private void sendCONTROLVandRELEASE()
         {
-            selecEntireTextFromControl();
-            clearTextSelected();
+            Teclado.selecEntireTextFromControl();
+            Teclado.clearTextSelected();
             sendText("{CTRLDOWN}");
             sendText("v");
             sendText("{CTRLUP}");
@@ -744,8 +653,8 @@ namespace FiscalApp
                     string _texto = repeatXTimes(qtdeRepeticao, campo.texto_campo);
                     Clipboard.SetText(_texto);
 
-                    selecEntireTextFromControl();
-                    clearTextSelected();
+                    Teclado.selecEntireTextFromControl();
+                    Teclado.clearTextSelected();
 
                     sendText("{CTRLDOWN}");
                     sendText("v");
@@ -883,158 +792,6 @@ namespace FiscalApp
             MessageBox.Show(local.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void consultarProtocoloToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtChavesDeAcesso.Text))
-            {
-                MessageBox.Show("Informe as chaves de acesso.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            const int EGR_CLK_BTN_DIREITO_NF = 14;
-            const int EGR_CLK_1ST_LIN_GRID_RET_CONS_PROTO = 20;
-
-            CamposRow clickRetConsultaProto = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_1ST_LIN_GRID_RET_CONS_PROTO)[0];
-            CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
-
-            string[] sep = new string[] { Environment.NewLine };
-            string[] chaves = txtChavesDeAcesso.Text.Split(separator: sep, options: StringSplitOptions.None);
-            string resultadoConsulta = "";
-            StringBuilder resultado = new StringBuilder();
-
-            bringSAPUI_ToFront();
-
-            int count = 1;
-
-            foreach (string chave in chaves)
-            {
-                //toolTip1.Show("Executando chave de acesso " + count + "...", this, 2000);
-                if (chave.Length > 0)
-                {
-                    clickEditingControl(402, 44);
-
-                    sendText("{SHIFTDOWN}{F4}");
-                    sendText("{SHIFTUP}");
-
-                    System.Threading.Thread.Sleep(3500);
-
-                    Clipboard.SetText(chave);
-
-                    sendCONTROLVandRELEASE();
-
-                    sendText("{CTRLDOWN}");
-                    sendText("s");
-                    sendText("{CTRLUP}");
-
-                    System.Threading.Thread.Sleep(2500);
-
-                    sendText("{F8}");
-
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF);    // aguarda retorno da consulta da nf
-
-                    // CLICK BOTÃO DIREITO NF
-                    clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, button: MouseButton.RIGHT, noWait: false, waitTime: 3000);
-
-                    sendText("c");
-                    System.Threading.Thread.Sleep(2000);
-
-                    sendText("c");
-                    System.Threading.Thread.Sleep(1000);
-
-                    sendText("{ENTER}");
-
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF);
-
-                    // Clica 1st linha de retorno da consulta protocolo 
-                    clickEditingControl(clickRetConsultaProto.locationX, clickRetConsultaProto.locationY);
-
-                    sendCONTROLCandRELEASE();
-
-                    resultadoConsulta = Clipboard.GetText();
-
-                    // Fecha a tela de retorno da consulta do protocolo
-                    //clickEditingControl(1151, 219, waitTime: 6500, mouseSpeed: 30);      
-                    sendText("{ESC}");
-
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF);
-
-                    resultado.AppendLine(chave + ";" + resultadoConsulta);
-
-                    count++;
-                }
-
-            }
-
-            txtResultadoConsulta.Text = resultado.ToString();
-
-            MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void consultarNaturezaOperaçãoNFsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //if (string.IsNullOrEmpty(txtChavesDeAcesso.Text))
-            //{
-            //    MessageBox.Show("Informe as chaves de acesso.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //    return;
-            //}
-
-            //string[] sep = new string[] { Environment.NewLine };
-            //string[] chaves = txtChavesDeAcesso.Text.Split(separator: sep, options: StringSplitOptions.None);
-            //string resultadoConsulta = "";
-            //StringBuilder resultado = new StringBuilder();
-
-            //bringSAPUI_ToFront();
-
-            //int count = 1;
-
-            //foreach (string chave in chaves)
-            //{
-            //    //toolTip1.Show("Executando chave de acesso " + count + "...", this, 2000);
-            //    if (chave.Length > 0)
-            //    {
-            //        sendText("{SHIFTDOWN}{F4}");
-            //        sendText("{SHIFTUP}");
-
-            //        System.Threading.Thread.Sleep(3500);
-
-            //        Clipboard.SetText(chave);
-
-            //        sendCONTROLVandRELEASE();
-
-            //        sendText("{CTRLDOWN}");
-            //        sendText("s");
-            //        sendText("{CTRLUP}");
-
-            //        System.Threading.Thread.Sleep(2500);
-
-            //        sendText("{F8}");
-
-            //        System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF );    // aguarda retorno da consulta da nf
-
-            //        clickEditingControl(292, 287, button: MouseButton.RIGHT, mouseSpeed: 60);   // CLICK BOTÃO DIREITO NF
-
-            //        clickEditingControl(344, 414, waitTime: 5500, mouseSpeed: 60);      // CLICK EM CONSULTA PROTOCOLO
-
-            //        clickEditingControl(305, 294, mouseSpeed: 40);      // Clica sob o retorno do EDX
-
-            //        sendCONTROLCandRELEASE();
-
-            //        resultadoConsulta = Clipboard.GetText();
-
-            //        clickEditingControl(1151, 219, waitTime: 6500, mouseSpeed: 30);      // Fecha a tela de consulta
-
-            //        resultado.AppendLine(chave + ";" + resultadoConsulta);
-
-            //        count++;
-            //    }
-
-            //}
-
-            //txtResultadoConsulta.Text = resultado.ToString();
-
-            //MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void confirmarOperaçãoEmMassaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtChavesDeAcesso.Text))
@@ -1092,7 +849,7 @@ namespace FiscalApp
 
                     // CLICK BOTÃO DIREITO NF
                     //clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
-                    clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
+                    clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: AcaoBaseClass.MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
 
                     sendText("{DOWN}");
                     System.Threading.Thread.Sleep(1000);
@@ -1129,12 +886,6 @@ namespace FiscalApp
             MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void controleDeNFeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var frm = new ControleNFeForm();
-            frm.Show(this);
-        }
-
         private void efetuarDownloadDeXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -1162,7 +913,7 @@ namespace FiscalApp
             clickEditingControl(posicionaVlrMontante.locationX, posicionaVlrMontante.locationY, "", false);
 
             // Seleciona texto.
-            selecEntireTextFromControl();
+            Teclado.selecEntireTextFromControl();
 
             // Copia valor montante.
             sendCONTROLCandRELEASE();
@@ -1173,10 +924,10 @@ namespace FiscalApp
             clickEditingControl(posicionaValorItem1Pedido.locationX, posicionaValorItem1Pedido.locationY, "", false);
 
             // Seleciona texto.
-            selecEntireTextFromControl();
+            Teclado.selecEntireTextFromControl();
 
             // Apaga.
-            clearTextSelected();
+            Teclado.clearTextSelected();
 
             // Cola valor da clip.
             sendCONTROLVandRELEASE();
@@ -1188,7 +939,7 @@ namespace FiscalApp
             clickEditingControl(clicaCampoVlrLiquido.locationX, clicaCampoVlrLiquido.locationY, "", false);
 
             // Seleciona texto.
-            selecEntireTextFromControl();
+            Teclado.selecEntireTextFromControl();
 
             // Copia valor líquido.
             sendCONTROLCandRELEASE();
@@ -1220,10 +971,10 @@ namespace FiscalApp
             clickEditingControl(clicaQtdeItem1.locationX, clicaQtdeItem1.locationY, "", false);
 
             // Seleciona texto.
-            selecEntireTextFromControl();
+            Teclado.selecEntireTextFromControl();
 
             // Apaga.
-            clearTextSelected();
+            Teclado.clearTextSelected();
 
             // manda percentual p/ clip.
             Clipboard.SetText(percentual.ToString());
@@ -1252,33 +1003,77 @@ namespace FiscalApp
                 return;
             }
 
-            //DialogResult ret = MessageBox.Show("Esta operação vai executar " + iteracoes + " iterações de download de XML no EGR.\n" +
-            //    "Faça a pesquisa e deixe o grid de notas preenchido com " + iteracoes + " notas fiscais.\n\nContinuar?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            #region "ANTIGO COM BD"
 
-            //if (ret == DialogResult.No)
+            //const int EGR_CLK_BTN_DIREITO_NF = 14;
+
+            //CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
+
+            //bringSAPUI_ToFront();
+
+            //for (int i = 1; i <= frm.QtdeIteracoes.Value; i++)
             //{
-            //    return;
+            //    // Tem que aguardar uns segundos para o Menu de Contexto aparecer.
+            //    clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: 1000, button: AcaoBaseClass.MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
+
+            //    sendText("d");
+
+            //    MainForm.AguardarResposta();
+
+            //    if (STOP_CURRENT_PROCESS)
+            //    {
+            //        return;
+            //    }
             //}
 
-            const int EGR_CLK_BTN_DIREITO_NF = 14;
+            #endregion
 
-            CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
+            Actions acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                new Acao()
+                {
+                    Local = new Point(292,287),
+                    BotaoMouse = AcaoBaseClass.MouseButton.RIGHT,
+                    Nome = "botão direito na nf",
+                    //TempoEsperaAntesAcao = 1000,
+                    TempoEsperaAposAcao = 1000, //mantenha isso, o menu do SAP em si é lento.
+                },
+
+                new Tecla()
+                {
+                    Key = "D"
+                },
+            });
 
             bringSAPUI_ToFront();
 
+            // Diminui o tempo de espera.
+            //WAIT_TIME = 500;
+
+            StringBuilder chaves = new StringBuilder();
+
             for (int i = 1; i <= frm.QtdeIteracoes.Value; i++)
             {
-                // Tem que aguardar uns segundos para o Menu de Contexto aparecer.
-                clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: 1000, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
 
-                sendText("d");
-
-                MainForm.AguardarResposta();
-
-                if (STOP_CURRENT_PROCESS)
+                foreach (var a in acoes.Lista)
                 {
-                    return;
+                    if (a.IsTecla)
+                    {
+                        a.EnviarTecla();
+                    }
+                    else
+                    {
+                        a.Clicar();
+                    }
+
+                    MainForm.AguardarResposta();
+
+                    if (STOP_CURRENT_PROCESS)
+                    {
+                        return;
+                    }
                 }
+
             }
 
             MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
@@ -1456,7 +1251,7 @@ namespace FiscalApp
                 switch (a.Tag)
                 {
                     case "copiarconteúdo":
-                        chaves.AppendLine(returnEntireTextSelected());
+                        chaves.AppendLine(MainForm.copyEntireTextFromControl());
                         break;
 
                     case "savetoclipboard":
@@ -1487,80 +1282,98 @@ namespace FiscalApp
 
         private void copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NotaFiscal nforigem = new NotaFiscal();
-            NotaFiscal nfref = new NotaFiscal();
+            // Precisa estar com as 2 notas (Origem e a de Entrada--Referência) no grid.
+
+            #region "SELECIONA AS 2 NOTAS, DE ORIGEM E REF NO GRID"
+
+            CopiarChvOrigemeRefToolStripMenuItem.PerformClick();
+
+            DialogResult resB = MessageBox.Show("Abra a NF de Origem(Saída) e de dentro dela abra a NF de Entrada(Referência).\n\nConfirme para continuar.",
+                    Application.ProductName,
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+            if (resB == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            #endregion
+
+            WAIT_TIME = 300;
+            int wait_antes = 50;
+            int wait_depois = 50;
+
+            #region "COLETA DADOS DA NOTA DE REFERENCIA -- QUE ESTÁ ABERTA"
+
+            string nfref_chave = "";
+            string nfref_dtemi = "";
+            string nfref_numero = "";
+            string nfref_emissor = "";
+            string nfref_serie = "";
+            string nfref_tpOper = "";
 
             Actions acoes = new Actions(new List<AcaoBaseClass>()
             {
                 // Estando dentro da NF de Referência, a NF de Entrada.
                 // Supõe-se que parte da Nota Fiscal de Entrada.
 
-                new Acao(531,68, "clica em chave de acesso da NF de Entrada"),
-                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
-                new Acao(610,133, "clica Tp Operacao da NF de Entrada"),
-                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
-                new Acao(914,112, "clica Data Emissão da NF de Entrada"),
-                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
-                new Acao(1146,70, "clica no Emissor da NF de Entrada"),
-                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
-                new Acao(921,72, "clica no Número da NF de Entrada"),
-
-                new Acao(517, 115, "clica em chave de acesso referencia"),
-                new Acao(AcoesPredefinidas.CopiarTodoTextoDoCampoParaClipboard),
-
-                new Tecla()
-                {
-                    Key = "{F3}",
-                    TempoEsperaAposAcao = 1000,
-                },
-
-                new Tecla()
-                {
-                    Key = "{F3}",
-                    TempoEsperaAposAcao = 1000,
-                },
-
                 new Acao()
                 {
-                    Local = new Point(114, -12),
-                    Nome = "seleção dinâmica",
-                    TempoEsperaAntesAcao = 1000,
+                    Local = new Point(531,68),
+                    Nome = "clica em chave de acesso da NF de Entrada",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
                 },
-
-                new Acao(781, 123, "entra no matchcode de chaves de acesso"),
-                new Acao(164, 371, "limpa os itens existentes"),
-
-                new Acao() { Tag = "savetoclipboard" },
-
-                new Acao(352, 372, "upload clipboard"),
-                new Acao(42, 371, "executar F8 na  de chv de acesso"),
-                new Acao(53, 413, "Control S"),
-                new Acao(84, -11, "F8 na  principal"),
+                new Acao()
+                {
+                    Local = new Point(574,134),
+                    Tag = "clica Tp Operacao da NF de Entrada",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(899,122),
+                    Tag = "clica Data Emissão da NF de Entrada",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(1108,70),
+                    Tag = "clica no Emissor da NF de Entrada",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(887,66),
+                    Tag = "clica no Número da NF de Entrada",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(865,89),
+                    Tag = "clica na Série da NF de Entrada",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{F3}",
+                    TempoEsperaAposAcao = 1000,
+                },
             });
 
             bringSAPUI_ToFront();
 
-            // Diminui o tempo de espera.
-            WAIT_TIME = 500;
+            int count = 1;
 
-            StringBuilder chaves = new StringBuilder();
+            Clipboard.Clear();
 
             foreach (var a in acoes.Lista)
             {
-                switch (a.Tag)
-                {
-                    case "copiarconteúdo":
-                        chaves.AppendLine(returnEntireTextSelected());
-                        break;
-
-                    case "savetoclipboard":
-                        Clipboard.SetText(chaves.ToString());
-                        break;
-
-                    default:
-                        break;
-                }
-
                 if (a.IsTecla)
                 {
                     a.EnviarTecla();
@@ -1576,8 +1389,359 @@ namespace FiscalApp
                 {
                     return;
                 }
+
+                Teclado.sendToClipboardEntireTextSelected();
+
+                switch (count)
+                {
+                    case 1:
+                        nfref_chave = Clipboard.GetText();
+                        break;
+
+                    case 2:
+                        nfref_tpOper = Clipboard.GetText();
+                        break;
+
+                    case 3:
+                        nfref_dtemi = Clipboard.GetText();
+                        break;
+
+                    case 4:
+                        nfref_emissor = Clipboard.GetText();
+                        break;
+
+                    case 5:
+                        nfref_numero = Clipboard.GetText();
+                        break;
+
+                    case 6:
+                        nfref_serie = Clipboard.GetText();
+                        break;
+
+                    default:
+                        break;
+                }
+
+                count++;
             }
+
+            #endregion
+
+            if (int.Parse(nfref_tpOper) != 0)
+            {
+                MessageBox.Show("NF de Referência não é uma Nota Fiscal de Entrada.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            #region "COLETA DADOS DA NOTA DE ORIGEM -- QUE ESTÁ ABERTA"
+
+            string nf_chave = "";
+            string nf_dtemi = "";
+            string nf_numero = "";
+            string nf_emissor = "";
+            string nf_tpOper = "";
+            string nf_serie = "";
+
+            acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                new Acao()
+                {
+                    Local = new Point(531,68),
+                    Nome = "clica em chave de acesso",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(574,134),
+                    Tag = "clica Tp Operacao",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(899,122),
+                    Tag = "clica Data Emissão",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(1108,70),
+                    Tag = "clica no Emissor",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(887,66),
+                    Tag = "clica no Número da NF",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Acao()
+                {
+                    Local = new Point(865,89),
+                    Tag = "clica na Série",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{F3}",
+                    TempoEsperaAposAcao = 1000,
+                },
+            });
+
+            count = 1;
+
+            Clipboard.Clear();
+
+            foreach (var a in acoes.Lista)
+            {
+                if (a.IsTecla)
+                {
+                    a.EnviarTecla();
+                }
+                else
+                {
+                    a.Clicar();
+                }
+
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
+
+                Teclado.sendToClipboardEntireTextSelected();
+
+                switch (count)
+                {
+                    case 1:
+                        nf_chave = Clipboard.GetText();
+                        break;
+
+                    case 2:
+                        nf_tpOper = Clipboard.GetText();
+                        break;
+
+                    case 3:
+                        nf_dtemi = Clipboard.GetText();
+                        break;
+
+                    case 4:
+                        nf_emissor = Clipboard.GetText();
+                        break;
+
+                    case 5:
+                        nf_numero = Clipboard.GetText();
+                        break;
+
+                    case 6:
+                        nf_serie = Clipboard.GetText();
+                        break;
+
+                    default:
+                        break;
+                }
+
+                count++;
+            }
+
+            #endregion
+
+            #region "FAZ A OPERAÇÃO NÃO REALIZADA"
+
+            acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                // Carrega a nota fiscal de origem
+                // Botão Direito nela e chama a Operação Não Realizada
+                // Cola o Texto
+                // Clica no botão de gravar
+                // Clica para sair
+                // Popup avisando pra marcar "NF Recusada com Emissão de NF de Entrada"
+
+                // Carrega a nota fiscal de origem
+
+                new Acao()
+                {
+                    Local = new Point(435,111),
+                    Nome = "preenche o numero da NF de Origem",
+                    TempoEsperaAntesAcao = 500,
+                    TempoEsperaAposAcao = 500,
+                    Texto = nf_numero
+                    //PausarAposAcao = true
+                },
+
+                new Acao(84, -11, "F8 na Tela Principal"),
+
+                //new Acao()
+                //{
+                //    Local = new Point(415,68),
+                //    Nome = "preenche o fornecedor",
+                //    TempoEsperaAntesAcao = wait_antes,
+                //    TempoEsperaAposAcao = wait_depois,
+                //    Texto = nfref_emissor
+                //},
+
+                //new Acao()
+                //{
+                //    Local = new Point(406,158),
+                //    Nome = "preenche a data emissao",
+                //    TempoEsperaAntesAcao = wait_antes,
+                //    TempoEsperaAposAcao = wait_depois,
+                //    Texto = nfref_dtemi
+                //},
+                //new Acao(84, -11, "F8 na  principal"),
+
+                new Acao()
+                {
+                    Local = new Point(292,287),
+                    BotaoMouse = AcaoBaseClass.MouseButton.RIGHT,
+                    Nome = "botão direito na nf",
+                    TempoEsperaAntesAcao = 500,
+                    TempoEsperaAposAcao = 500,
+                },
+
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+
+                new Tecla("{ENTER}"),
+
+                new Acao()
+                {
+                    Local = new Point(513,201),
+                    Nome = "clica no texto da operação não realizada",
+                    TempoEsperaAntesAcao = 1000,
+                },
+
+                new Tecla("{HOME}"),
+
+                new Tecla("{SHIFTDOWN}"),
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla()
+                {
+                    Key = "{DOWN}",
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+                new Tecla("{DELETE}"),
+                new Tecla("{SHIFTUP}"),
+
+                new Tecla()
+                {
+                    Key = "NF CANCELADA PELA NF DE ENTRADA " + nfref_numero + "-" + nfref_serie + " DE " + nfref_dtemi,
+                    TempoEsperaAntesAcao = wait_antes,
+                    TempoEsperaAposAcao = wait_depois
+                },
+
+                new Tecla("{ENTER}"),
+                new Tecla("{ENTER}"),
+
+            });
+
+            foreach (var a in acoes.Lista)
+            {
+                if (a.IsTecla)
+                {
+                    a.EnviarTecla();
+                }
+                else
+                {
+                    a.Clicar();
+                }
+
+                MainForm.AguardarResposta();
+
+                if (STOP_CURRENT_PROCESS)
+                {
+                    return;
+                }
+
+                if (a.PausarAposAcao)
+                {
+                    DialogResult res = MessageBox.Show("Pausa após ação. Continua?", Application.ProductName,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                    if (res == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            #endregion
+
+
         }
 
+        private void conectarDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            var sqlConnection = DatabaseConnection.DEBUGConnection;
+            taConjunto.Connection = sqlConnection;
+            taCampos.Connection = sqlConnection;
+            taConjuntoCampos.Connection = sqlConnection;
+            taListarDadosConjunto.Connection = sqlConnection;
+            //#else
+            //            sb.AppendLine(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=");
+            //            sb.Append(System.IO.Path.GetDirectoryName(Application.UserAppDataPath) + @"\Data\App_Data\Database.mdf");
+            //            sb.Append(";Integrated Security=True");
+
+            //            global::FiscalApp.Properties.Settings.Default.dbProgram = sb.ToString();
+#endif
+
+            try
+            {
+                taConjunto.Fill(fiscalDataSet.Conjunto);
+                taCampos.Fill(fiscalDataSet.Campos);
+                taConjuntoCampos.Fill(fiscalDataSet.ConjuntoCampos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            whnd = AutoItX.WinGetHandle(Text);
+
+            dgvConjunto.DataError += dataGridView_DataError;
+            dgvCampos.DataError += dataGridView_DataError;
+            dgvConjuntoCampos.DataError += dataGridView_DataError;
+
+        }
     }
 }
