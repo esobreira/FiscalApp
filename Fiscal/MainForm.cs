@@ -800,90 +800,180 @@ namespace FiscalApp
                 return;
             }
 
-            const int EGR_CLK_BTN_DIREITO_NF = 14;
-            const int EGR_CLK_OPER_CONFIRMADA = 15;
-            const int EGR_CLK_GRID_1ST_LIN_OP_CONF = 16;
-            const int EGR_OP_CONF_FECHA_TELA_RETORNO = 17;
+            #region "Antigo"
 
-            CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
-            CamposRow clickOperConfirmada = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_OPER_CONFIRMADA)[0];
-            CamposRow clickLinhaOpConf = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_GRID_1ST_LIN_OP_CONF)[0];
-            CamposRow opConfirmadaFechaTelaRetorno = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_OP_CONF_FECHA_TELA_RETORNO)[0];
+            //const int EGR_CLK_BTN_DIREITO_NF = 14;
+            //const int EGR_CLK_OPER_CONFIRMADA = 15;
+            //const int EGR_CLK_GRID_1ST_LIN_OP_CONF = 16;
+            //const int EGR_OP_CONF_FECHA_TELA_RETORNO = 17;
+
+            //CamposRow btnDireitoNF = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_BTN_DIREITO_NF)[0];
+            //CamposRow clickOperConfirmada = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_OPER_CONFIRMADA)[0];
+            //CamposRow clickLinhaOpConf = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_CLK_GRID_1ST_LIN_OP_CONF)[0];
+            //CamposRow opConfirmadaFechaTelaRetorno = (CamposRow)fiscalDataSet.Campos.Select("id = " + EGR_OP_CONF_FECHA_TELA_RETORNO)[0];
+
+            //string[] sep = new string[] { Environment.NewLine };
+            //string[] chaves = txtChavesDeAcesso.Text.Split(separator: sep, options: StringSplitOptions.None);
+            //string resultadoConsulta = "";
+            //StringBuilder resultado = new StringBuilder();
+
+            //bringSAPUI_ToFront();
+
+            //int count = 1;
+
+            //foreach (string chave in chaves)
+            //{
+            //    //toolTip1.Show("Executando chave de acesso " + count + "...", this, 2000);
+            //    if (chave.Length > 0)
+            //    {
+            //        clickEditingControl(402, 44);
+
+            //        sendText("{SHIFTDOWN}{F4}");
+            //        sendText("{SHIFTUP}");
+
+            //        System.Threading.Thread.Sleep(3500);
+
+            //        Clipboard.SetText(chave);
+
+            //        sendCONTROLVandRELEASE();
+
+            //        sendText("{CTRLDOWN}");
+            //        sendText("s");
+            //        sendText("{CTRLUP}");
+
+            //        System.Threading.Thread.Sleep(1500);
+            //        // 2500
+
+            //        sendText("{F8}");
+
+            //        System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 1800);    // aguarda retorno da consulta da nf
+            //        //2500
+
+            //        // CLICK BOTÃO DIREITO NF
+            //        //clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
+            //        clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: AcaoBaseClass.MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
+
+            //        sendText("{DOWN}");
+            //        System.Threading.Thread.Sleep(1000);
+            //        sendText("{ENTER}");
+
+            //        //3500
+            //        System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);      // Aguarda concluir a Confirmação da Operação. == 10s
+
+            //        //4000
+            //        clickEditingControl(clickLinhaOpConf.locationX, clickLinhaOpConf.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 2500);      // Clica no grid na primeira linha de retorno do EDX, tem que aguardar um pouco.
+
+            //        sendCONTROLCandRELEASE();
+
+            //        resultadoConsulta = Clipboard.GetText();
+
+            //        sendText("{ESC}");
+
+            //        // Se confirmado, consultará a nf novamente. 
+            //        //if (resultado.ToString().ToLower().IndexOf("registrado e vinculado") > 0)
+            //        //{
+            //        // aguarda refresh do grid quando confirmado com sucesso, valor pode variar.
+            //        System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);
+            //        //}
+
+            //        resultado.AppendLine(chave + ";" + resultadoConsulta);
+
+            //        count++;
+            //    }
+
+            //}
+
+            //txtResultadoConsulta.Text = resultado.ToString();
+
+            //MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            #endregion
+
+            // O usuário informa as chaves de acesso
+            // Percorre o array de chaves
+            // Para cada chave...
+            //      1. Pesquisa a chave
+            //      2. Botão direito e confirma a operação.
 
             string[] sep = new string[] { Environment.NewLine };
             string[] chaves = txtChavesDeAcesso.Text.Split(separator: sep, options: StringSplitOptions.None);
-            string resultadoConsulta = "";
-            StringBuilder resultado = new StringBuilder();
+            //int count = 1;
+
+            Actions acoes = null;
 
             bringSAPUI_ToFront();
 
-            int count = 1;
+            // Diminui o tempo de espera.
+            WAIT_TIME = 500;
 
             foreach (string chave in chaves)
             {
-                //toolTip1.Show("Executando chave de acesso " + count + "...", this, 2000);
-                if (chave.Length > 0)
+                // Copia para Clibboard a chave.
+                Clipboard.SetText(chave);
+
+                acoes = new Actions(new List<AcaoBaseClass>()
                 {
-                    clickEditingControl(402, 44);
+                    new Acao() {
+                            Local = new Point(114,-12),
+                            Nome = "seleção dinâmica",
+                            TempoEsperaAntesAcao = 1000,
+                    },
+                    new Acao(781, 123, "entra no matchcode de chaves de acesso"),
+                    new Acao(164,371, "limpa os itens existentes"),
+                    new Acao(352, 372, "upload clipboard"),
+                    new Acao(42,371, "executar F8 na  de chv de acesso"),
+                    new Acao(53,413, "Control S"),
+                    new Acao(84,-11, "F8 na  principal"),
 
-                    sendText("{SHIFTDOWN}{F4}");
-                    sendText("{SHIFTUP}");
+                    new Acao()
+                    {
+                        Local = new Point(292,287),
+                        BotaoMouse = AcaoBaseClass.MouseButton.RIGHT,
+                        Nome = "botão direito na nf",
+                        //TempoEsperaAntesAcao = 1000,
+                        TempoEsperaAposAcao = 1000, //mantenha isso, o menu do SAP em si é lento.
+                    },
 
-                    System.Threading.Thread.Sleep(3500);
+                    new Tecla()
+                    {
+                        Key = "O"
+                    },
 
-                    Clipboard.SetText(chave);
+                    new Tecla()
+                    {
+                        Key = "{ENTER}"
+                    },
 
-                    sendCONTROLVandRELEASE();
+                    new Acao() {
+                        Local = new Point(1152,221),
+                        Nome = "fecha a tela de confirmação",
+                        TempoEsperaAposAcao = 1000,
+                    }
 
-                    sendText("{CTRLDOWN}");
-                    sendText("s");
-                    sendText("{CTRLUP}");
+                });
 
-                    System.Threading.Thread.Sleep(1500);
-                    // 2500
+                foreach (var a in acoes.Lista)
+                {
+                    if (a.IsTecla)
+                    {
+                        a.EnviarTecla();
+                    }
+                    else
+                    {
+                        a.Clicar();
+                    }
 
-                    sendText("{F8}");
+                    MainForm.AguardarResposta();
 
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 1800);    // aguarda retorno da consulta da nf
-                    //2500
-
-                    // CLICK BOTÃO DIREITO NF
-                    //clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, button: MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
-                    clickEditingControl(btnDireitoNF.locationX, btnDireitoNF.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 4000, button: AcaoBaseClass.MouseButton.RIGHT);   // CLICK BOTÃO DIREITO NF
-
-                    sendText("{DOWN}");
-                    System.Threading.Thread.Sleep(1000);
-                    sendText("{ENTER}");
-
-                    //3500
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);      // Aguarda concluir a Confirmação da Operação. == 10s
-
-                    //4000
-                    clickEditingControl(clickLinhaOpConf.locationX, clickLinhaOpConf.locationY, noWait: false, waitTime: WAIT_TIME_QUERY_NF - 2500);      // Clica no grid na primeira linha de retorno do EDX, tem que aguardar um pouco.
-
-                    sendCONTROLCandRELEASE();
-
-                    resultadoConsulta = Clipboard.GetText();
-
-                    sendText("{ESC}");
-
-                    // Se confirmado, consultará a nf novamente. 
-                    //if (resultado.ToString().ToLower().IndexOf("registrado e vinculado") > 0)
-                    //{
-                    // aguarda refresh do grid quando confirmado com sucesso, valor pode variar.
-                    System.Threading.Thread.Sleep(WAIT_TIME_QUERY_NF + 2500);
-                    //}
-
-                    resultado.AppendLine(chave + ";" + resultadoConsulta);
-
-                    count++;
+                    if (STOP_CURRENT_PROCESS)
+                    {
+                        return;
+                    }
                 }
 
             }
 
-            txtResultadoConsulta.Text = resultado.ToString();
-
-            MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Processo terminado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void efetuarDownloadDeXMLToolStripMenuItem_Click(object sender, EventArgs e)
