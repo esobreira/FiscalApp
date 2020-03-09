@@ -3,6 +3,7 @@ using FiscalApp.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using static FiscalApp.FiscalDataSet;
@@ -84,6 +85,102 @@ namespace FiscalApp
                 //}
 
             } while (AutoItX.MouseGetCursor() != MainForm.ARROW_CURSOR);
+        }
+
+        private void CalcularVlrUnitarioDePedido100()
+        {
+            const int POSICIONAR_ITEM_1_PEDIDO = 26;
+            const int POSICIONAR_EM_VALOR_MONTANTE = 21;
+            const int MOSTRAR_VLR_LIQUIDO = 22;
+            const int FOCAR_CAMPO_VLR_LIQUIDO = 23;
+            const int CLICAR_QUANTIDADE_ITEM_1_PED = 24;
+            const int VOLTAR_BARRA_AO_INICIO = 25;
+
+            CamposRow posicionaValorItem1Pedido = (CamposRow)fiscalDataSet.Campos.Select("id = " + POSICIONAR_ITEM_1_PEDIDO)[0];
+            CamposRow posicionaVlrMontante = (CamposRow)fiscalDataSet.Campos.Select("id = " + POSICIONAR_EM_VALOR_MONTANTE)[0];
+            CamposRow mostrarVlrLiquido = (CamposRow)fiscalDataSet.Campos.Select("id = " + MOSTRAR_VLR_LIQUIDO)[0];
+            CamposRow clicaCampoVlrLiquido = (CamposRow)fiscalDataSet.Campos.Select("id = " + FOCAR_CAMPO_VLR_LIQUIDO)[0];
+            CamposRow clicaQtdeItem1 = (CamposRow)fiscalDataSet.Campos.Select("id = " + CLICAR_QUANTIDADE_ITEM_1_PED)[0];
+            CamposRow voltarBarraAoInicio = (CamposRow)fiscalDataSet.Campos.Select("id = " + VOLTAR_BARRA_AO_INICIO)[0];
+
+            bringSAPUI_ToFront();
+
+            // posiciona em Valor Montante
+            clickEditingControl(posicionaVlrMontante.locationX, posicionaVlrMontante.locationY, "", false);
+
+            // Seleciona texto.
+            Teclado.selecEntireTextFromControl();
+
+            // Copia valor montante.
+            sendCONTROLCandRELEASE();
+
+            string valorMontanteClip = Clipboard.GetText();
+
+            // posiciona no valor do item 1.
+            clickEditingControl(posicionaValorItem1Pedido.locationX, posicionaValorItem1Pedido.locationY, "", false);
+
+            // Seleciona texto.
+            Teclado.selecEntireTextFromControl();
+
+            // Apaga.
+            Teclado.clearTextSelected();
+
+            // Cola valor da clip.
+            sendCONTROLVandRELEASE();
+
+            // Move barra de rolagem p/ exibir Preço Líquido do Pedido.
+            clickEditingControl(mostrarVlrLiquido.locationX, mostrarVlrLiquido.locationY, "", false);
+
+            // clica no campo de Vlr Líquido.
+            clickEditingControl(clicaCampoVlrLiquido.locationX, clicaCampoVlrLiquido.locationY, "", false);
+
+            // Seleciona texto.
+            Teclado.selecEntireTextFromControl();
+
+            // Copia valor líquido.
+            sendCONTROLCandRELEASE();
+
+            string valorLiquido = Clipboard.GetText();
+
+            // divide vlr nf pelo pedido 
+            // resultado * 100, arredonda p/ 3 casas.
+
+            decimal percentual = 0;
+
+            try
+            {
+                percentual = decimal.Round((decimal.Parse(valorMontanteClip) / decimal.Parse(valorLiquido)) * 100, 3);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao efetuar o cálculo. (" + ex.Message + ")\n\n" +
+                    "Valor Montante: " + valorMontanteClip + "\n" +
+                    "Valor Líquido: " + valorLiquido,
+                    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            // barra no início
+            clickEditingControl(voltarBarraAoInicio.locationX, voltarBarraAoInicio.locationY, "", false);
+
+            // posiciona no campo quantidade.
+            clickEditingControl(clicaQtdeItem1.locationX, clicaQtdeItem1.locationY, "", false);
+
+            // Seleciona texto.
+            Teclado.selecEntireTextFromControl();
+
+            // Apaga.
+            Teclado.clearTextSelected();
+
+            // manda percentual p/ clip.
+            Clipboard.SetText(percentual.ToString());
+
+            // Cola valor da clip.
+            sendCONTROLVandRELEASE();
+
+            // Envia enter
+            sendText("{ENTER}");
+            sendText("{ENTER}");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -351,20 +448,60 @@ namespace FiscalApp
 
         public static void clickEditingControl(CamposRow campo, string toolTip = "", int numClicks = 1)
         {
-            int mouseSpeed = 10;
-            int waitTime = 500;
+            //int mouseSpeed = 10;
+            //int waitTime = 500;
+
+            int mouseSpeed = 5;
+            int waitTime = 250;
 
             clickEditingControl(campo.locationX, campo.locationY, toolTip: "", noWait: false, waitTime: waitTime, mouseSpeed: mouseSpeed, numClicks: numClicks);
         }
 
         public static string copyEntireTextFromControl()
         {
-            AutoItX.Send("{HOME}");
-            AutoItX.Send("{SHIFTDOWN}");
-            AutoItX.Send("+{END}");
-            AutoItX.Send("{SHIFTUP}");
-            AutoItX.Send("^c");
-            return Clipboard.GetText();
+            string texto = "";
+            int times = 0;
+
+            Clipboard.Clear();
+
+            try
+            {
+                AutoItX.Send("{HOME}");
+                AutoItX.Send("{SHIFTDOWN}");
+                AutoItX.Send("+{END}");
+                AutoItX.Send("{SHIFTUP}");
+                AutoItX.Send("^c");
+
+                //Cursor = Cursors.WaitCursor;
+
+                while (texto.Length == 0 && times < 10)
+                {
+                    try
+                    {
+                        times++;
+                        // get pode falhar as vezes.
+                        texto = Clipboard.GetText(TextDataFormat.Text);
+                    }
+                    catch (Exception)
+                    {
+                        System.Threading.Thread.Sleep(400);
+                        //AguardarResposta();
+                    }
+                }
+
+                Program.LOG.AppendLine("TIMES: " + times);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return string.Empty;
+            }
+            finally
+            {
+                //Cursor = Cursors.Default;
+            }
+
+            return texto.ToString();
         }
 
         private string selectAndGetTextFromCursor()
@@ -419,12 +556,12 @@ namespace FiscalApp
             MessageBox.Show(log.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        private void sendText(string text)
+        public static void sendText(string text)
         {
             AutoItX.Send(text);
         }
 
-        private void sendCONTROLVandRELEASE()
+        public static void sendCONTROLVandRELEASE()
         {
             Teclado.selecEntireTextFromControl();
             Teclado.clearTextSelected();
@@ -433,7 +570,7 @@ namespace FiscalApp
             sendText("{CTRLUP}");
         }
 
-        private void sendCONTROLCandRELEASE()
+        public static void sendCONTROLCandRELEASE()
         {
             sendText("{CTRLDOWN}");
             sendText("c");
@@ -983,98 +1120,7 @@ namespace FiscalApp
 
         private void calcularVlrUnitarioDePedido100ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            const int POSICIONAR_ITEM_1_PEDIDO = 26;
-            const int POSICIONAR_EM_VALOR_MONTANTE = 21;
-            const int MOSTRAR_VLR_LIQUIDO = 22;
-            const int FOCAR_CAMPO_VLR_LIQUIDO = 23;
-            const int CLICAR_QUANTIDADE_ITEM_1_PED = 24;
-            const int VOLTAR_BARRA_AO_INICIO = 25;
-
-            CamposRow posicionaValorItem1Pedido = (CamposRow)fiscalDataSet.Campos.Select("id = " + POSICIONAR_ITEM_1_PEDIDO)[0];
-            CamposRow posicionaVlrMontante = (CamposRow)fiscalDataSet.Campos.Select("id = " + POSICIONAR_EM_VALOR_MONTANTE)[0];
-            CamposRow mostrarVlrLiquido = (CamposRow)fiscalDataSet.Campos.Select("id = " + MOSTRAR_VLR_LIQUIDO)[0];
-            CamposRow clicaCampoVlrLiquido = (CamposRow)fiscalDataSet.Campos.Select("id = " + FOCAR_CAMPO_VLR_LIQUIDO)[0];
-            CamposRow clicaQtdeItem1 = (CamposRow)fiscalDataSet.Campos.Select("id = " + CLICAR_QUANTIDADE_ITEM_1_PED)[0];
-            CamposRow voltarBarraAoInicio = (CamposRow)fiscalDataSet.Campos.Select("id = " + VOLTAR_BARRA_AO_INICIO)[0];
-
-            bringSAPUI_ToFront();
-
-            // posiciona em Valor Montante
-            clickEditingControl(posicionaVlrMontante.locationX, posicionaVlrMontante.locationY, "", false);
-
-            // Seleciona texto.
-            Teclado.selecEntireTextFromControl();
-
-            // Copia valor montante.
-            sendCONTROLCandRELEASE();
-
-            string valorMontanteClip = Clipboard.GetText();
-
-            // posiciona no valor do item 1.
-            clickEditingControl(posicionaValorItem1Pedido.locationX, posicionaValorItem1Pedido.locationY, "", false);
-
-            // Seleciona texto.
-            Teclado.selecEntireTextFromControl();
-
-            // Apaga.
-            Teclado.clearTextSelected();
-
-            // Cola valor da clip.
-            sendCONTROLVandRELEASE();
-
-            // Move barra de rolagem p/ exibir Preço Líquido do Pedido.
-            clickEditingControl(mostrarVlrLiquido.locationX, mostrarVlrLiquido.locationY, "", false);
-
-            // clica no campo de Vlr Líquido.
-            clickEditingControl(clicaCampoVlrLiquido.locationX, clicaCampoVlrLiquido.locationY, "", false);
-
-            // Seleciona texto.
-            Teclado.selecEntireTextFromControl();
-
-            // Copia valor líquido.
-            sendCONTROLCandRELEASE();
-
-            string valorLiquido = Clipboard.GetText();
-
-            // divide vlr nf pelo pedido 
-            // resultado * 100, arredonda p/ 3 casas.
-
-            decimal percentual = 0;
-
-            try
-            {
-                percentual = decimal.Round((decimal.Parse(valorMontanteClip) / decimal.Parse(valorLiquido)) * 100, 3);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao efetuar o cálculo. (" + ex.Message + ")\n\n" +
-                    "Valor Montante: " + valorMontanteClip + "\n" +
-                    "Valor Líquido: " + valorLiquido,
-                    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
-
-            // barra no início
-            clickEditingControl(voltarBarraAoInicio.locationX, voltarBarraAoInicio.locationY, "", false);
-
-            // posiciona no campo quantidade.
-            clickEditingControl(clicaQtdeItem1.locationX, clicaQtdeItem1.locationY, "", false);
-
-            // Seleciona texto.
-            Teclado.selecEntireTextFromControl();
-
-            // Apaga.
-            Teclado.clearTextSelected();
-
-            // manda percentual p/ clip.
-            Clipboard.SetText(percentual.ToString());
-
-            // Cola valor da clip.
-            sendCONTROLVandRELEASE();
-
-            // Envia enter
-            sendText("{ENTER}");
-            sendText("{ENTER}");
+            CalcularVlrUnitarioDePedido100();
         }
 
         private void posicionarEmCoordenadasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1172,7 +1218,6 @@ namespace FiscalApp
         private void entrarDadosTelefoniaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmDadosTelefonia(fiscalDataSet);
-            //frm.Show(this);
             frm.ShowDialog(this);
         }
 
@@ -1801,19 +1846,21 @@ namespace FiscalApp
 
         private void conectarDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-#if DEBUG
-            var sqlConnection = DatabaseConnection.DEBUGConnection;
-            taConjunto.Connection = sqlConnection;
-            taCampos.Connection = sqlConnection;
-            taConjuntoCampos.Connection = sqlConnection;
-            taListarDadosConjunto.Connection = sqlConnection;
-            //#else
-            //            sb.AppendLine(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=");
-            //            sb.Append(System.IO.Path.GetDirectoryName(Application.UserAppDataPath) + @"\Data\App_Data\Database.mdf");
-            //            sb.Append(";Integrated Security=True");
+//#if DEBUG
+//            var sqlConnection = DatabaseConnection.DEBUGConnection;
+//            taConjunto.Connection = sqlConnection;
+//            taCampos.Connection = sqlConnection;
+//            taConjuntoCampos.Connection = sqlConnection;
+//            taListarDadosConjunto.Connection = sqlConnection;
+//            //#else
+//            //            sb.AppendLine(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=");
+//            //            sb.Append(System.IO.Path.GetDirectoryName(Application.UserAppDataPath) + @"\Data\App_Data\Database.mdf");
+//            //            sb.Append(";Integrated Security=True");
 
-            //            global::FiscalApp.Properties.Settings.Default.dbProgram = sb.ToString();
-#endif
+//            //            global::FiscalApp.Properties.Settings.Default.dbProgram = sb.ToString();
+//#endif
+
+            Cursor = Cursors.WaitCursor;
 
             try
             {
@@ -1825,6 +1872,10 @@ namespace FiscalApp
             {
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
 
             whnd = AutoItX.WinGetHandle(Text);
 
@@ -1832,6 +1883,12 @@ namespace FiscalApp
             dgvCampos.DataError += dataGridView_DataError;
             dgvConjuntoCampos.DataError += dataGridView_DataError;
 
+        }
+
+        private void entrarDadosMIROToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmEntraDadosMIRO(fiscalDataSet);
+            frm.ShowDialog(this);
         }
     }
 }

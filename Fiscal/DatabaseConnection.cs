@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Data.SqlClient;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FiscalApp
 {
@@ -14,8 +10,7 @@ namespace FiscalApp
             get
             {
                 StringBuilder sb = new StringBuilder();
-                
-                //C:\Users\sobebe01\source\repos\FiscalApp\Fiscal\bin\newDebug\App_Data
+
                 sb.Append(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=");
                 sb.Append(@"C:\Users\sobebe01\source\repos\FiscalApp\Fiscal\bin\Debug\App_Data\Database.mdf");
                 sb.Append(";Integrated Security=True");

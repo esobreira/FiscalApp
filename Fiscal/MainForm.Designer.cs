@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.tabPageConjunto = new System.Windows.Forms.TabPage();
@@ -82,6 +82,8 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.obterLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.posicionarEmCoordenadasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.conectarDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,6 +93,7 @@
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.entrarDadosTelefoniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.entrarDadosMIROToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eGRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entrarEGREPrepararConsultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pesquisarChavesDeAcessoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,8 +128,9 @@
             this.bsObterConfigConjunto = new System.Windows.Forms.BindingSource(this.components);
             this.taObterConfigConjunto = new FiscalApp.FiscalDataSetTableAdapters.ObterConfigConjuntoTableAdapter();
             this.chavesDeAcessoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.conectarDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabPageLog = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.LOG = new System.Windows.Forms.TextBox();
             this.mainTabControl.SuspendLayout();
             this.tabPageConjunto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConjunto)).BeginInit();
@@ -148,6 +152,8 @@
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsObterConfigConjunto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chavesDeAcessoBindingSource)).BeginInit();
+            this.tabPageLog.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -160,6 +166,7 @@
             this.mainTabControl.Controls.Add(this.tabPageConjuntoCampos);
             this.mainTabControl.Controls.Add(this.tabPageListagemConjuntos);
             this.mainTabControl.Controls.Add(this.tabPageChavesAcesso);
+            this.mainTabControl.Controls.Add(this.tabPageLog);
             this.mainTabControl.Location = new System.Drawing.Point(8, 60);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
@@ -332,8 +339,8 @@
             // qtdeRepeticoesDataGridViewTextBoxColumn
             // 
             this.qtdeRepeticoesDataGridViewTextBoxColumn.DataPropertyName = "QtdeRepeticoes";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.NullValue = "0";
+            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.qtdeRepeticoesDataGridViewTextBoxColumn.HeaderText = "Qtde. Repetições";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.Name = "qtdeRepeticoesDataGridViewTextBoxColumn";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.ReadOnly = true;
@@ -614,6 +621,18 @@
             this.posicionarEmCoordenadasToolStripMenuItem.Text = "Posicionar em Coordenadas";
             this.posicionarEmCoordenadasToolStripMenuItem.Click += new System.EventHandler(this.posicionarEmCoordenadasToolStripMenuItem_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(291, 6);
+            // 
+            // conectarDatabaseToolStripMenuItem
+            // 
+            this.conectarDatabaseToolStripMenuItem.Name = "conectarDatabaseToolStripMenuItem";
+            this.conectarDatabaseToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
+            this.conectarDatabaseToolStripMenuItem.Text = "Conectar Database";
+            this.conectarDatabaseToolStripMenuItem.Click += new System.EventHandler(this.conectarDatabaseToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -634,7 +653,8 @@
             this.toolStripSeparator13,
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem,
             this.toolStripSeparator14,
-            this.entrarDadosTelefoniaToolStripMenuItem});
+            this.entrarDadosTelefoniaToolStripMenuItem,
+            this.entrarDadosMIROToolStripMenuItem});
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
             this.editarToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.editarToolStripMenuItem.Text = "Editar";
@@ -678,6 +698,13 @@
             this.entrarDadosTelefoniaToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.entrarDadosTelefoniaToolStripMenuItem.Text = "Entrar Dados Telefonia";
             this.entrarDadosTelefoniaToolStripMenuItem.Click += new System.EventHandler(this.entrarDadosTelefoniaToolStripMenuItem_Click);
+            // 
+            // entrarDadosMIROToolStripMenuItem
+            // 
+            this.entrarDadosMIROToolStripMenuItem.Name = "entrarDadosMIROToolStripMenuItem";
+            this.entrarDadosMIROToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.entrarDadosMIROToolStripMenuItem.Text = "Entrar Dados MIRO";
+            this.entrarDadosMIROToolStripMenuItem.Click += new System.EventHandler(this.entrarDadosMIROToolStripMenuItem_Click);
             // 
             // eGRToolStripMenuItem
             // 
@@ -764,7 +791,7 @@
             // localDaInstalaçãoToolStripMenuItem
             // 
             this.localDaInstalaçãoToolStripMenuItem.Name = "localDaInstalaçãoToolStripMenuItem";
-            this.localDaInstalaçãoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.localDaInstalaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.localDaInstalaçãoToolStripMenuItem.Text = "Local da Instalação";
             this.localDaInstalaçãoToolStripMenuItem.Click += new System.EventHandler(this.localDaInstalaçãoToolStripMenuItem_Click);
             // 
@@ -913,17 +940,36 @@
             this.chavesDeAcessoBindingSource.DataMember = "ChavesDeAcesso";
             this.chavesDeAcessoBindingSource.DataSource = this.fiscalDataSet;
             // 
-            // conectarDatabaseToolStripMenuItem
+            // tabPageLog
             // 
-            this.conectarDatabaseToolStripMenuItem.Name = "conectarDatabaseToolStripMenuItem";
-            this.conectarDatabaseToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
-            this.conectarDatabaseToolStripMenuItem.Text = "Conectar Database";
-            this.conectarDatabaseToolStripMenuItem.Click += new System.EventHandler(this.conectarDatabaseToolStripMenuItem_Click);
+            this.tabPageLog.Controls.Add(this.panel1);
+            this.tabPageLog.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLog.Name = "tabPageLog";
+            this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLog.Size = new System.Drawing.Size(777, 398);
+            this.tabPageLog.TabIndex = 6;
+            this.tabPageLog.Text = "Log";
+            this.tabPageLog.UseVisualStyleBackColor = true;
             // 
-            // toolStripSeparator4
+            // panel1
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(291, 6);
+            this.panel1.Controls.Add(this.LOG);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(771, 392);
+            this.panel1.TabIndex = 0;
+            // 
+            // LOG
+            // 
+            this.LOG.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LOG.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LOG.Location = new System.Drawing.Point(0, 0);
+            this.LOG.Multiline = true;
+            this.LOG.Name = "LOG";
+            this.LOG.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.LOG.Size = new System.Drawing.Size(771, 392);
+            this.LOG.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -967,6 +1013,9 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsObterConfigConjunto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chavesDeAcessoBindingSource)).EndInit();
+            this.tabPageLog.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1056,7 +1105,6 @@
         private System.Windows.Forms.ToolStripMenuItem entrarEGREPrepararConsultaToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
-        private System.Windows.Forms.ToolStripMenuItem calcularVlrUnitarioDePedido100ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem posicionarEmCoordenadasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
@@ -1070,6 +1118,11 @@
         private System.Windows.Forms.ToolStripMenuItem copiarChageOrigemEReferênciaParaOperNãoRealizadaToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem conectarDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem entrarDadosMIROToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem calcularVlrUnitarioDePedido100ToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPageLog;
+        private System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.TextBox LOG;
     }
 }
 

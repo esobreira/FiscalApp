@@ -105,12 +105,17 @@
   <ItemGroup>
     <Compile Include="Acao.cs" />
     <Compile Include="Actions.cs" />
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Forms\CFOP_Servico_Form.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CFOP_Servico_Form.Designer.cs">
       <DependentUpon>CFOP_Servico_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDadosTelefonia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDadosTelefonia.Designer.cs">
+      <DependentUpon>frmDadosTelefonia.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmIteracoes.cs">
       <SubType>Form</SubType>
@@ -118,17 +123,17 @@
     <Compile Include="Forms\frmIteracoes.Designer.cs">
       <DependentUpon>frmIteracoes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmEntraDadosMIRO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEntraDadosMIRO.Designer.cs">
+      <DependentUpon>frmEntraDadosMIRO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Repetir_CodImposto_Form.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Repetir_CodImposto_Form.Designer.cs">
       <DependentUpon>Repetir_CodImposto_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmDadosTelefonia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmDadosTelefonia.Designer.cs">
-      <DependentUpon>frmDadosTelefonia.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmPosicionarCoordenadas.cs">
       <SubType>Form</SubType>
@@ -154,20 +159,25 @@
     <Compile Include="Entities\NotaFiscal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Semaforo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Tecla.cs" />
     <Compile Include="Teclado.cs" />
     <EmbeddedResource Include="Forms\CFOP_Servico_Form.resx">
       <DependentUpon>CFOP_Servico_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDadosTelefonia.resx">
+      <DependentUpon>frmDadosTelefonia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmIteracoes.resx">
       <DependentUpon>frmIteracoes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEntraDadosMIRO.resx">
+      <DependentUpon>frmEntraDadosMIRO.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Repetir_CodImposto_Form.resx">
       <DependentUpon>Repetir_CodImposto_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmDadosTelefonia.resx">
-      <DependentUpon>frmDadosTelefonia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmPosicionarCoordenadas.resx">
       <DependentUpon>frmPosicionarCoordenadas.cs</DependentUpon>
@@ -254,22 +264,22 @@
   <ItemGroup>
     <PublishFile Include="App_Data\Database.mdf">
       <Visible>False</Visible>
-      <PublishState>DataFile</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="App_Data\Database_log.ldf">
       <Visible>False</Visible>
-      <PublishState>DataFile</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

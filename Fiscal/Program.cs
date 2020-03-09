@@ -14,37 +14,39 @@ namespace FiscalApp
     {
         //These Dll's will handle the hooks. Yaaar mateys!
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook,
-            LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //private static extern IntPtr SetWindowsHookEx(int idHook,
+        //    LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //private static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
-            IntPtr wParam, IntPtr lParam);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
+        //    IntPtr wParam, IntPtr lParam);
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
+        //[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        //private static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        // The two dll imports below will handle the window hiding.
+        //// The two dll imports below will handle the window hiding.
 
-        [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
+        //[DllImport("kernel32.dll")]
+        //static extern IntPtr GetConsoleWindow();
 
-        [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        //[DllImport("user32.dll")]
+        //static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        const int SW_HIDE = 0;
+        //const int SW_HIDE = 0;
 
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        private static LowLevelKeyboardProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        //private const int WH_KEYBOARD_LL = 13;
+        //private const int WM_KEYDOWN = 0x0100;
+        //private static LowLevelKeyboardProc _proc = HookCallback;
+        //private static IntPtr _hookID = IntPtr.Zero;
 
         static MainForm mainForm = new MainForm();
+
+        public static StringBuilder LOG = new StringBuilder();
 
         [STAThread]
         static void Main()
@@ -67,38 +69,38 @@ namespace FiscalApp
             //UnhookWindowsHookEx(_hookID);
         }
 
-        private static IntPtr SetHook(LowLevelKeyboardProc proc)
-        {
-            using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
-            {
-                return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
+        //private static IntPtr SetHook(LowLevelKeyboardProc proc)
+        //{
+        //    using (Process curProcess = Process.GetCurrentProcess())
+        //    using (ProcessModule curModule = curProcess.MainModule)
+        //    {
+        //        return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+        //    }
+        //}
 
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+        //private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-            {
-                int vkCode = Marshal.ReadInt32(lParam);
+        //private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        //{
+        //    if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+        //    {
+        //        int vkCode = Marshal.ReadInt32(lParam);
 
-                //Console.WriteLine((Keys)vkCode);
-                //StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", true);
-                //sw.Write((Keys)vkCode);
-                //sw.Close();
+        //        //Console.WriteLine((Keys)vkCode);
+        //        //StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", true);
+        //        //sw.Write((Keys)vkCode);
+        //        //sw.Close();
 
-                //separeWords((Keys)vkCode);    // UNCOMMENT TO WORK
-                //mainForm.txtBuffer.Text = _buffer.ToString();
-                //mainForm.txtGarbage.Text = _garbage.ToString();
-            }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
-        }
+        //        //separeWords((Keys)vkCode);    // UNCOMMENT TO WORK
+        //        //mainForm.txtBuffer.Text = _buffer.ToString();
+        //        //mainForm.txtGarbage.Text = _garbage.ToString();
+        //    }
+        //    return CallNextHookEx(_hookID, nCode, wParam, lParam);
+        //}
 
-        public static StringBuilder _buffer = new StringBuilder();
-        public static StringBuilder _garbage = new StringBuilder();
-        public static string _lastWord = "";
+        //public static StringBuilder _buffer = new StringBuilder();
+        //public static StringBuilder _garbage = new StringBuilder();
+        //public static string _lastWord = "";
 
         //private static void separeWords(Keys key)
         //{
@@ -429,10 +431,10 @@ namespace FiscalApp
         //    }
         //}
 
-        private static void Ll_Click(object sender, EventArgs e)
-        {
-            LinkLabel link = sender as LinkLabel;
-            Clipboard.SetText(link.Text);
-        }
+        //private static void Ll_Click(object sender, EventArgs e)
+        //{
+        //    LinkLabel link = sender as LinkLabel;
+        //    Clipboard.SetText(link.Text);
+        //}
     }
 }

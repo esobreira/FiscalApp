@@ -65,7 +65,7 @@
       <Value Profile="(Default)">251479-55</Value>
     </Setting>
     <Setting Name="CFOPTelefonia" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2302/AA</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ValorNFTelefonia" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -73,16 +73,32 @@
     <Setting Name="BaseCalculoTelefonia" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="DatabaseConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\bin\Debug\App_Data\Database.mdf;Integrated Security=True;Connect Timeout=30&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\bin\Debug\App_Data\Database.mdf;Integrated Security=True;Connect Timeout=30</Value>
-    </Setting>
     <Setting Name="ValorIsentasTelefonia" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DataFaturaMIRO" Type="System.String" Scope="User">
+      <Value Profile="(Default)">01012020</Value>
+    </Setting>
+    <Setting Name="NumeroNFMIRO" Type="System.String" Scope="User">
+      <Value Profile="(Default)">251479-55</Value>
+    </Setting>
+    <Setting Name="MontanteMIRO" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="NumeroPedidoMIRO" Type="System.String" Scope="User">
+      <Value Profile="(Default)">4500525861</Value>
+    </Setting>
+    <Setting Name="CategoriaNFMIRO" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UFFornecedor" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CFOPNFMiro" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CodigoServicoMIRO" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

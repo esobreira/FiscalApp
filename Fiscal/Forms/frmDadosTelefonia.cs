@@ -8,7 +8,7 @@ namespace FiscalApp
 {
     public partial class frmDadosTelefonia : Form
     {
-        private DataSet dataSet;
+        private DataSet dataSet = null;
 
         public frmDadosTelefonia(DataSet dataSet)
         {
@@ -24,8 +24,6 @@ namespace FiscalApp
 
         private void btnPreencher_Click(object sender, EventArgs e)
         {
-            MainForm.bringSAPUI_ToFront();
-
             FiscalApp.Properties.Settings.Default.Save();
 
             string fmt = @"^(\$)?((\d+)|(\d{1,3})(\,\d{3})*)(\,\d{2,})?$";
@@ -58,6 +56,14 @@ namespace FiscalApp
             calculaIsentas();
 
             FiscalDataSet fiscal = (FiscalDataSet)dataSet;
+
+            if (fiscal.Campos.Count.Equals(0))
+            {
+                MessageBox.Show("Necessário conectar com banco de dados.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            MainForm.bringSAPUI_ToFront();
 
             CamposRow DATA_FATURA = (CamposRow)fiscal.Campos.Select("id = " + DTFATURA)[0];
             CamposRow NUMERO_NF = (CamposRow)fiscal.Campos.Select("id = " + NRNF)[0];

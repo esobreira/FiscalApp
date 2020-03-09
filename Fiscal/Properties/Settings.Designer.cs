@@ -252,7 +252,7 @@ namespace FiscalApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2302/AA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string CFOPTelefonia {
             get {
                 return ((string)(this["CFOPTelefonia"]));
@@ -286,17 +286,6 @@ namespace FiscalApp.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\bin\\Debug\\App" +
-            "_Data\\Database.mdf;Integrated Security=True;Connect Timeout=30")]
-        public string DatabaseConnectionString {
-            get {
-                return ((string)(this["DatabaseConnectionString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
@@ -306,6 +295,102 @@ namespace FiscalApp.Properties {
             }
             set {
                 this["ValorIsentasTelefonia"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("01012020")]
+        public string DataFaturaMIRO {
+            get {
+                return ((string)(this["DataFaturaMIRO"]));
+            }
+            set {
+                this["DataFaturaMIRO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("251479-55")]
+        public string NumeroNFMIRO {
+            get {
+                return ((string)(this["NumeroNFMIRO"]));
+            }
+            set {
+                this["NumeroNFMIRO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string MontanteMIRO {
+            get {
+                return ((string)(this["MontanteMIRO"]));
+            }
+            set {
+                this["MontanteMIRO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4500525861")]
+        public string NumeroPedidoMIRO {
+            get {
+                return ((string)(this["NumeroPedidoMIRO"]));
+            }
+            set {
+                this["NumeroPedidoMIRO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CategoriaNFMIRO {
+            get {
+                return ((string)(this["CategoriaNFMIRO"]));
+            }
+            set {
+                this["CategoriaNFMIRO"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UFFornecedor {
+            get {
+                return ((string)(this["UFFornecedor"]));
+            }
+            set {
+                this["UFFornecedor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CFOPNFMiro {
+            get {
+                return ((string)(this["CFOPNFMiro"]));
+            }
+            set {
+                this["CFOPNFMiro"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CodigoServicoMIRO {
+            get {
+                return ((string)(this["CodigoServicoMIRO"]));
+            }
+            set {
+                this["CodigoServicoMIRO"] = value;
             }
         }
     }
