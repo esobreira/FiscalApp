@@ -103,7 +103,9 @@ namespace FiscalApp
             if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             MainForm.clickEditingControl(VERIFICA_SALDO);
-            decimal saldo = decimal.Parse(MainForm.copyEntireTextFromControl());
+            //decimal saldo = decimal.Parse(copyEntireTextFromControl());
+            decimal saldo = 0;
+            MessageBox.Show("CORRIGIR ISSO.");
 
             if (!saldo.Equals(0))
             {

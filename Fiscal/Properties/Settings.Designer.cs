@@ -393,5 +393,41 @@ namespace FiscalApp.Properties {
                 this["CodigoServicoMIRO"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FimCNPJ {
+            get {
+                return ((string)(this["FimCNPJ"]));
+            }
+            set {
+                this["FimCNPJ"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MIROSimples {
+            get {
+                return ((bool)(this["MIROSimples"]));
+            }
+            set {
+                this["MIROSimples"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MIROSimei {
+            get {
+                return ((bool)(this["MIROSimei"]));
+            }
+            set {
+                this["MIROSimei"] = value;
+            }
+        }
     }
 }

@@ -96,6 +96,8 @@ namespace FiscalApp
             const int CLICAR_QUANTIDADE_ITEM_1_PED = 24;
             const int VOLTAR_BARRA_AO_INICIO = 25;
 
+            conectarDatabaseToolStripMenuItem.PerformClick();
+
             CamposRow posicionaValorItem1Pedido = (CamposRow)fiscalDataSet.Campos.Select("id = " + POSICIONAR_ITEM_1_PEDIDO)[0];
             CamposRow posicionaVlrMontante = (CamposRow)fiscalDataSet.Campos.Select("id = " + POSICIONAR_EM_VALOR_MONTANTE)[0];
             CamposRow mostrarVlrLiquido = (CamposRow)fiscalDataSet.Campos.Select("id = " + MOSTRAR_VLR_LIQUIDO)[0];
@@ -459,10 +461,9 @@ namespace FiscalApp
 
         public static string copyEntireTextFromControl()
         {
-            string texto = "";
-            int times = 0;
+            //Clipboard.Clear();
 
-            Clipboard.Clear();
+            string texto = "";
 
             try
             {
@@ -470,39 +471,92 @@ namespace FiscalApp
                 AutoItX.Send("{SHIFTDOWN}");
                 AutoItX.Send("+{END}");
                 AutoItX.Send("{SHIFTUP}");
-                AutoItX.Send("^c");
+                //AutoItX.Send("^c");
 
-                //Cursor = Cursors.WaitCursor;
+                sendText("{CTRLDOWN}");
+                sendText("c");
+                sendText("{CTRLUP}");
 
-                while (texto.Length == 0 && times < 10)
+                try
                 {
-                    try
+                    do
                     {
-                        times++;
-                        // get pode falhar as vezes.
-                        texto = Clipboard.GetText(TextDataFormat.Text);
-                    }
-                    catch (Exception)
-                    {
-                        System.Threading.Thread.Sleep(400);
-                        //AguardarResposta();
-                    }
+                        texto = Clipboard.GetText();
+                    } while (texto.Length.Equals(0));
                 }
-
-                Program.LOG.AppendLine("TIMES: " + times);
+                catch (Exception)
+                {
+                    System.Threading.Thread.Sleep(100);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return string.Empty;
             }
-            finally
-            {
-                //Cursor = Cursors.Default;
-            }
 
-            return texto.ToString();
+            return texto;
         }
+
+        //public string copyEntireTextFromControl()
+        //{
+        //    string texto = "";
+        //    int times = 0;
+
+        //    Clipboard.Clear();
+
+        //    try
+        //    {
+        //        AutoItX.Send("{HOME}");
+        //        AutoItX.Send("{SHIFTDOWN}");
+        //        AutoItX.Send("+{END}");
+        //        AutoItX.Send("{SHIFTUP}");
+        //        //AutoItX.Send("^c");
+        //        //System.Threading.Thread.Sleep(1000);
+
+        //        AutoItX.Send("{CTRLDOWN}");
+        //        AutoItX.Send("{INS}");
+        //        AutoItX.Send("{CTRLUP}");
+        //        //System.Threading.Thread.Sleep(1000);
+
+        //        MainForm.AguardarResposta(true);
+
+        //        //Cursor = Cursors.WaitCursor;
+
+        //        //while (texto.Length == 0 && times < 10)
+        //        //{
+        //        //    try
+        //        //    {
+        //        //        times++;
+
+        //        //        // get pode falhar as vezes.
+        //        //        texto = Clipboard.GetText();
+
+        //        //        //IDataObject teste = Clipboard.GetDataObject();
+        //        //        //object data = teste.GetData("UnicodeText", autoConvert: true);
+        //        //        //texto = data.ToString();
+        //        //    }
+        //        //    catch (Exception)
+        //        //    {
+        //        //        System.Threading.Thread.Sleep(50);
+        //        //        //AguardarResposta();
+        //        //    }
+        //        //}
+
+        //        Program.LOG.AppendLine("TIMES: " + times);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //        return string.Empty;
+        //    }
+        //    finally
+        //    {
+        //        //Cursor = Cursors.Default;
+        //    }
+
+        //    return texto.ToString();
+        //}
 
         private string selectAndGetTextFromCursor()
         {
@@ -1386,7 +1440,7 @@ namespace FiscalApp
                 switch (a.Tag)
                 {
                     case "copiarconteúdo":
-                        chaves.AppendLine(MainForm.copyEntireTextFromControl());
+                        chaves.AppendLine(copyEntireTextFromControl());
                         break;
 
                     case "savetoclipboard":
@@ -1887,8 +1941,70 @@ namespace FiscalApp
 
         private void entrarDadosMIROToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.conectarDatabaseToolStripMenuItem.PerformClick();
+
             var frm = new frmEntraDadosMIRO(fiscalDataSet);
             frm.ShowDialog(this);
+        }
+
+        private void salvarFreteCIFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmIteracoes frm = new frmIteracoes();
+            int qtdeIteracoes = 0;
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                qtdeIteracoes = (int)frm.QtdeIteracoes.Value;
+            }
+
+
+            Actions acoes = new Actions(new List<AcaoBaseClass>()
+            {
+                new Acao(237,-75, "botão gravar"),
+
+                //new Tecla()
+                //{
+                //    Key = "{F3}",
+                //    TempoEsperaAposAcao = 1000,
+                //},
+
+                //new Acao()
+                //{
+                //    Local = new Point(237, -75),
+                //    Nome = "botão gravar",
+                //    TempoEsperaAntesAcao = 200,
+                //},
+            });
+
+            bringSAPUI_ToFront();
+
+            // Diminui o tempo de espera.
+            WAIT_TIME = 500;
+
+            StringBuilder chaves = new StringBuilder();
+
+            for (int i = 0; i < qtdeIteracoes; i++)
+            {
+                foreach (var a in acoes.Lista)
+                {
+                    if (a.IsTecla)
+                    {
+                        a.EnviarTecla();
+                    }
+                    else
+                    {
+                        a.Clicar();
+                    }
+
+                    MainForm.AguardarResposta();
+
+                    if (STOP_CURRENT_PROCESS)
+                    {
+                        return;
+                    }
+                }
+            }
+            
         }
     }
 }

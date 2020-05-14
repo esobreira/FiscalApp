@@ -10,6 +10,7 @@ namespace FiscalApp
     public partial class frmEntraDadosMIRO : Form
     {
         private DataSet dataSet = null;
+        private string[] ufs = new string[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
 
         public frmEntraDadosMIRO(DataSet dataSet)
         {
@@ -25,8 +26,6 @@ namespace FiscalApp
 
         private void btnPreencher_Click(object sender, EventArgs e)
         {
-            Program.LOG = new System.Text.StringBuilder();
-
             FiscalApp.Properties.Settings.Default.Save();
 
             string fmt = @"^(\$)?((\d+)|(\d{1,3})(\,\d{3})*)(\,\d{2,})?$";
@@ -103,16 +102,105 @@ namespace FiscalApp
             MainForm.AguardarResposta();
             if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
+            //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //sw.Start();
+
+            #region "Confere a UF"
+
+            //// Abre a tela de fornecedor.
+            //MainForm.clickEditingControl(804, 89, toolTip: "Aguarde a leitura da tela...");
+            //System.Threading.Thread.Sleep(500);
+            //send("{ENTER}");
+
+            //MainForm.AguardarResposta(); // Aguarda carregamento da tela.
+            //if (MainForm.STOP_CURRENT_PROCESS) { return; }
+
+            //// Lê a UF da tela.
+            //MainForm.clickEditingControl(412, 377);
+            //MainForm.copyEntireTextFromControl();
+            ////MainForm.AguardarResposta();
+            //txtUFFornecedor.Text = Clipboard.GetText();
+
+            //send("{F8}");       // Vai pro CNPJ
+            //MainForm.AguardarResposta();
+
+            //MainForm.clickEditingControl(227, 176); // Lê o CNPJ
+            //MainForm.copyEntireTextFromControl();
+            ////MainForm.AguardarResposta();
+            //retornoClip = Clipboard.GetText();      // Copia o CNPJ
+
+            //send("{F3}");       
+            //MainForm.AguardarResposta();
+
+            #endregion
+
+            bool ufValida = false;
+
+            if (txtUFFornecedor.Text.Length == 2)
+            {
+                for (int i = 0; i < ufs.Length; i++)
+                {
+                    ufValida = txtUFFornecedor.Text.Equals(ufs[i]);
+                    if (ufValida)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if (!ufValida)
+            {
+                var continua = MessageBox.Show("Não identificado a UF no local esperado. Continua?", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                if (continua == DialogResult.Cancel) { return; }
+            }
+            else
+            {
+                AtualizarDadosFornecedor();
+            }
+
+            //string strFimCNPJ = "";
+
+            //try
+            //{
+            //    strFimCNPJ = retornoClip.Substring(retornoClip.Length - 6, 6);
+            //}
+            //catch (Exception)
+            //{
+
+            //}
+
+            //if (!FimCNPJ.Text.Equals(strFimCNPJ))
+            //{
+            //    var continua = MessageBox.Show("Parece que o final do CNPJ está diferente do pedido. Continua?", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            //    if (continua == DialogResult.Cancel) { return; }
+            //}
+
             // Verifica se é pedido rateado %
-            MainForm.clickEditingControl(263, 422);     // LINHA 1 ITEM - COLUNA PERCENTUAL
+            MainForm.clickEditingControl(263, 422, "Aguarde a leitura da tela...");     // LINHA 1 ITEM - COLUNA PERCENTUAL
             retornoClip = MainForm.copyEntireTextFromControl();
+
             if (retornoClip.Trim().Equals("%"))
             {
                 CalcularVlrUnitarioDePedido100();
             }
 
-            MainForm.AguardarResposta();
-            if (MainForm.STOP_CURRENT_PROCESS) { return; }
+            //// Verifica o saldo.
+            //MainForm.clickEditingControl(VERIFICA_SALDO);
+            //retornoClip = MainForm.copyEntireTextFromControl();
+
+            //if (retornoClip.Length == 0)
+            //{
+            //    var continua = MessageBox.Show("Erro ao verificar o saldo. Continue somente após estar OK.\n\nContinua?", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            //    if (continua == DialogResult.Cancel) { return; }
+            //}
+
+            //decimal saldo = decimal.Parse(retornoClip);
+
+            //if (!saldo.Equals(0))
+            //{
+            //    var continua = MessageBox.Show("Confime SOMENTE após Semáforo Verde.", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            //    if (continua == DialogResult.Cancel) { return; }
+            //}
 
             var sema = new Semaforo();
             sema.VerificaSemaforo();
@@ -132,29 +220,9 @@ namespace FiscalApp
                 }
                 else
                 {
-                    MessageBox.Show("Irregularidade encontrada ao buscar o pedido. Verifique o pedido. Processo cancelado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-                    return;
+                    var continua = MessageBox.Show("Semáforo VERMELHO.\n\nIrregularidade encontrada. Verifique o pedido.\nCorrija e pressione OK para continuar.\n\nContinua?", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    if (continua == DialogResult.Cancel) { return; }
                 }
-            }
-
-            MainForm.AguardarResposta();
-            if (MainForm.STOP_CURRENT_PROCESS) { return; }
-
-            // Verifica o saldo.
-            MainForm.clickEditingControl(VERIFICA_SALDO);
-            retornoClip = MainForm.copyEntireTextFromControl();
-            if (retornoClip.Length == 0)
-            {
-                MessageBox.Show("Erro ao verificar o saldo. Processo cancelado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            decimal saldo = decimal.Parse(retornoClip);
-
-            if (!saldo.Equals(0))
-            {
-                var continua = MessageBox.Show("Confime SOMENTE após Semáforo Verde.", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-                if (continua == DialogResult.Cancel) { return; }
             }
 
             if (CategoriaNF.Text.Length == 0)
@@ -163,13 +231,19 @@ namespace FiscalApp
             }
 
             MainForm.clickEditingControl(CLK_DETALHES);
-            System.Threading.Thread.Sleep(1000);
-            send("{ENTER}");        // Para confirmar msg de data de vencimento.
 
-            MainForm.AguardarResposta();
+            MainForm.AguardarResposta();    // Tem que aguardar, o SAP tem um delay ao clicar na aba de Detalhes.
+
             if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
+            send("{ENTER}");        // Para confirmar msg de data de vencimento.
+
+            System.Threading.Thread.Sleep(1000); // aguarda um pouco mais pq a aba detalhe tem delay para mudar ao clicar mas nao tem waitcursor.
+
             MainForm.clickEditingControl(CTG_NF);
+
+            //System.Threading.Thread.Sleep(500);
+
             send(CategoriaNF.Text);
             send("{ENTER}");
             send("{ENTER}");
@@ -184,13 +258,38 @@ namespace FiscalApp
             MainForm.AguardarResposta();
             if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
-            MainForm.clickEditingControl(COL_CFOP_GRID);
-            Teclado.selectTextAndClear();
-            send(CFOP.Text);
+            if (CFOP.Text.Length > 0)
+            {
+                MainForm.clickEditingControl(COL_CFOP_GRID);
+                Teclado.selectTextAndClear();
+                send(CFOP.Text);
+            }
 
-            MainForm.clickEditingControl(CODIGO_CONTROLE);
-            Teclado.selectTextAndClear();
-            send(CodigoServico.Text);
+            if (CodigoServico.Text.Length > 0)
+            {
+                MainForm.clickEditingControl(CODIGO_CONTROLE);
+                Teclado.selectTextAndClear();
+                send(CodigoServico.Text);
+            }
+
+
+            string obs = "";
+
+            if (chkSimplesNacional.Checked)
+            {
+                obs += "SIMPLES=5% ";
+            }
+
+            if (chkSimei.Checked)
+            {
+                obs += "SIMEI";
+            }
+
+            if (obs.Length > 0)
+            {
+                MainForm.clickEditingControl(270, 157);
+                send(obs);
+            }
 
             send("{F3}");
             MainForm.AguardarResposta();
@@ -201,8 +300,6 @@ namespace FiscalApp
             //if (MainForm.STOP_CURRENT_PROCESS) { return; }
 
             //MessageBox.Show("Finalizado.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-
-            lblLOG.Text = Program.LOG.ToString();
         }
 
         public void CalcularVlrUnitarioDePedido100()
@@ -321,6 +418,15 @@ namespace FiscalApp
 
         private void txtUFFornecedor_Leave(object sender, EventArgs e)
         {
+            AtualizarDadosFornecedor();
+        }
+
+        private void AtualizarDadosFornecedor()
+        {
+            if (txtUFFornecedor.Text.Trim() == "")
+            {
+                return;
+            }
             if (txtUFFornecedor.Text.ToUpper() == "SP")
             {
                 CFOP.Text = "1999/XX";
@@ -361,9 +467,17 @@ namespace FiscalApp
             }
         }
 
-        private void frmEntraDadosMIRO_Load(object sender, EventArgs e)
+        private void FimCNPJ_Leave(object sender, EventArgs e)
         {
-            
+            FimCNPJ.Text = FimCNPJ.Text.Replace("-", "");
+        }
+
+        private void CodigoServico_Enter(object sender, EventArgs e)
+        {
+            if (CodigoServico.Text.Length > 3)
+            {
+                CodigoServico.Select(3, 4);
+            }
         }
     }
 }

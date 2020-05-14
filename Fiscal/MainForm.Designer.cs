@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.tabPageConjunto = new System.Windows.Forms.TabPage();
@@ -66,6 +66,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtResultadoConsulta = new System.Windows.Forms.TextBox();
             this.txtChavesDeAcesso = new System.Windows.Forms.TextBox();
+            this.tabPageLog = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.LOG = new System.Windows.Forms.TextBox();
             this.cntxLinkLabel = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.adicionarParaHotWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -128,9 +131,7 @@
             this.bsObterConfigConjunto = new System.Windows.Forms.BindingSource(this.components);
             this.taObterConfigConjunto = new FiscalApp.FiscalDataSetTableAdapters.ObterConfigConjuntoTableAdapter();
             this.chavesDeAcessoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tabPageLog = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.LOG = new System.Windows.Forms.TextBox();
+            this.salvarFreteCIFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.tabPageConjunto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConjunto)).BeginInit();
@@ -147,13 +148,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsListarDadosConjunto)).BeginInit();
             this.tabPageChavesAcesso.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabPageLog.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.cntxLinkLabel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsObterConfigConjunto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chavesDeAcessoBindingSource)).BeginInit();
-            this.tabPageLog.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -339,8 +340,8 @@
             // qtdeRepeticoesDataGridViewTextBoxColumn
             // 
             this.qtdeRepeticoesDataGridViewTextBoxColumn.DataPropertyName = "QtdeRepeticoes";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.NullValue = "0";
+            this.qtdeRepeticoesDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.qtdeRepeticoesDataGridViewTextBoxColumn.HeaderText = "Qtde. Repetições";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.Name = "qtdeRepeticoesDataGridViewTextBoxColumn";
             this.qtdeRepeticoesDataGridViewTextBoxColumn.ReadOnly = true;
@@ -490,6 +491,37 @@
             this.txtChavesDeAcesso.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtChavesDeAcesso.Size = new System.Drawing.Size(379, 386);
             this.txtChavesDeAcesso.TabIndex = 1;
+            // 
+            // tabPageLog
+            // 
+            this.tabPageLog.Controls.Add(this.panel1);
+            this.tabPageLog.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLog.Name = "tabPageLog";
+            this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLog.Size = new System.Drawing.Size(777, 398);
+            this.tabPageLog.TabIndex = 6;
+            this.tabPageLog.Text = "Log";
+            this.tabPageLog.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.LOG);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(771, 392);
+            this.panel1.TabIndex = 0;
+            // 
+            // LOG
+            // 
+            this.LOG.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LOG.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LOG.Location = new System.Drawing.Point(0, 0);
+            this.LOG.Multiline = true;
+            this.LOG.Name = "LOG";
+            this.LOG.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.LOG.Size = new System.Drawing.Size(771, 392);
+            this.LOG.TabIndex = 0;
             // 
             // cntxLinkLabel
             // 
@@ -654,7 +686,8 @@
             this.calcularVlrUnitarioDePedido100ToolStripMenuItem,
             this.toolStripSeparator14,
             this.entrarDadosTelefoniaToolStripMenuItem,
-            this.entrarDadosMIROToolStripMenuItem});
+            this.entrarDadosMIROToolStripMenuItem,
+            this.salvarFreteCIFToolStripMenuItem});
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
             this.editarToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.editarToolStripMenuItem.Text = "Editar";
@@ -791,7 +824,7 @@
             // localDaInstalaçãoToolStripMenuItem
             // 
             this.localDaInstalaçãoToolStripMenuItem.Name = "localDaInstalaçãoToolStripMenuItem";
-            this.localDaInstalaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.localDaInstalaçãoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.localDaInstalaçãoToolStripMenuItem.Text = "Local da Instalação";
             this.localDaInstalaçãoToolStripMenuItem.Click += new System.EventHandler(this.localDaInstalaçãoToolStripMenuItem_Click);
             // 
@@ -940,36 +973,12 @@
             this.chavesDeAcessoBindingSource.DataMember = "ChavesDeAcesso";
             this.chavesDeAcessoBindingSource.DataSource = this.fiscalDataSet;
             // 
-            // tabPageLog
+            // salvarFreteCIFToolStripMenuItem
             // 
-            this.tabPageLog.Controls.Add(this.panel1);
-            this.tabPageLog.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLog.Name = "tabPageLog";
-            this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLog.Size = new System.Drawing.Size(777, 398);
-            this.tabPageLog.TabIndex = 6;
-            this.tabPageLog.Text = "Log";
-            this.tabPageLog.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.LOG);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(771, 392);
-            this.panel1.TabIndex = 0;
-            // 
-            // LOG
-            // 
-            this.LOG.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LOG.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LOG.Location = new System.Drawing.Point(0, 0);
-            this.LOG.Multiline = true;
-            this.LOG.Name = "LOG";
-            this.LOG.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.LOG.Size = new System.Drawing.Size(771, 392);
-            this.LOG.TabIndex = 0;
+            this.salvarFreteCIFToolStripMenuItem.Name = "salvarFreteCIFToolStripMenuItem";
+            this.salvarFreteCIFToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.salvarFreteCIFToolStripMenuItem.Text = "Salvar Frete CIF";
+            this.salvarFreteCIFToolStripMenuItem.Click += new System.EventHandler(this.salvarFreteCIFToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1006,6 +1015,9 @@
             this.tabPageChavesAcesso.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tabPageLog.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.cntxLinkLabel.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -1013,9 +1025,6 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsObterConfigConjunto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chavesDeAcessoBindingSource)).EndInit();
-            this.tabPageLog.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1123,6 +1132,7 @@
         private System.Windows.Forms.TabPage tabPageLog;
         private System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.TextBox LOG;
+        private System.Windows.Forms.ToolStripMenuItem salvarFreteCIFToolStripMenuItem;
     }
 }
 

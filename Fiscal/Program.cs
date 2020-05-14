@@ -46,8 +46,6 @@ namespace FiscalApp
 
         static MainForm mainForm = new MainForm();
 
-        public static StringBuilder LOG = new StringBuilder();
-
         [STAThread]
         static void Main()
         {
